@@ -2,8 +2,8 @@
 
 include("../vendor/bootstrap.php");
 
-//$zip = new \ZipArchive();
-//var_dump($zip);
+use App\Controllers\HomeController;
 
-phpinfo();
+$controller = new HomeController();
 
+echo $controller->homeView();

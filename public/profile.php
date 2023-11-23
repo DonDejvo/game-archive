@@ -10,6 +10,7 @@ $controller = new ProfileController();
 switch($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $controller->loadProfile();
+        $controller->loadGames();
         break;
 }
 

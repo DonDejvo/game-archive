@@ -6,6 +6,7 @@ use App\Controller;
 use App\View;
 use App\Models\GameModel;
 use App\Models\GameGenreModel;
+use App\Models\GameStarModel;
 
 class GamesController extends Controller {
 
@@ -25,10 +26,17 @@ class GamesController extends Controller {
 
     private array $gameGenres = [];
 
+    const MAX_COVER_IMAGE_SIZE = 30000;
+
+    const COVER_IMAGE_FILE_TYPES = ["jpg", "jpeg", "gif"];
+
+    const MAX_UPLOADS_SIZE = 5000000;
+
     const FILTER_OPTIONS = [
-        'Most recent' => 1,
-        'Most starred' => 2,
-        'My games' => 3
+        'Most recent' => [1, false],
+        'Most starred' => [2, false],
+        'My games' => [3, true],
+        'My stars' => [4, true],
     ];
 
     private ?int $gameId;
@@ -55,6 +63,10 @@ class GamesController extends Controller {
 
     private string $errorMessage;
 
+    private int $starCount;
+
+    private bool $starred;
+
     public function __construct() {
 
         $this->search = $_GET['search'] ?? "";
@@ -74,12 +86,14 @@ class GamesController extends Controller {
         $this->genreName = null;
         $this->successMessage = "";
         $this->errorMessage = "";
+        $this->starCount = 0;
+        $this->starred = false;
     }
 
     public function loadGames() {
         $gameModel = new GameModel();
 
-        $result = $gameModel->getByParams($this->search, $this->page, $this->countPerPage, $this->filter, $this->genre);
+        $result = $gameModel->getByParams($this->search, $this->page, $this->countPerPage, $this->filter, $this->genre, $this->getUser()?->getId() ?? 0);
         $this->games = $result['data'];
         $this->gameCount = $result['count'];
     }
@@ -94,122 +108,119 @@ class GamesController extends Controller {
 
         $gameModel = new GameModel();
 
+        $this->titleError = "";
+        $this->uploadsError = "";
+        $this->coverImageError = "";
+        $this->successMessage = "";
+        $this->errorMessage = "";
+
+        $success = true;
+
         $user = $this->getUser();
         if($user == null) {
-            return;
+            $this->errorMessage = 'Unauthorized 401';
+            $success = false;
         }
 
-        $this->title = $_POST['title'];
-        $this->description = $_POST['description'];
-        $this->genreId = $_POST['genre'];
+        if($success) {
+            $this->title = $_POST['title'];
+            $this->description = $_POST['description'];
+            $this->genreId = $_POST['genre'];
 
-        if(empty($_POST['title'])) {
-            $this->titleError = 'Field is required';
-            return;
-        }
-
-        $fileCoverImage = $_FILES['cover-image'];
-
-        if ($fileCoverImage['error'] == 4 || ($fileCoverImage['size'] == 0 && $fileCoverImage['error'] == 0)) {
-            $this->coverImageError = 'Field is required';
-            return;
-        }
-
-        $coverImageFileType =  strtolower(pathinfo($fileCoverImage['name'], PATHINFO_EXTENSION));
-        $coverImageUrl = (string)time() . (string)rand(10, 100) . '.' .$coverImageFileType;
-
-        $coverImageCheck = getimagesize($_FILES["cover-image"]["tmp_name"]);
-        if($coverImageCheck == false) {
-            $this->coverImageError = 'File is not an image';
-            return;
-        }
-
-        if($coverImageFileType != "png" && $coverImageFileType != "jpg" && $coverImageFileType != "jpeg" && $coverImageFileType != "gif") {
-            $this->coverImageError = 'Only PNG, JPG, JPEG & GIF files allowed';
-            return;
-        }
-
-        if($fileCoverImage['size'] > 500000) {
-            $this->coverImageError = 'Image size exceeds limit of 500KB';
-            return;
-        }
-
-        $fileUploads = $_FILES['uploads'];
-
-        if ($fileUploads['error'] == 4 || ($fileUploads['size'] == 0 && $fileUploads['error'] == 0)) {
-            $this->uploadsError = 'Field is required';
-            return;
-        }
-
-        $uploadsFileType =  strtolower(pathinfo($fileUploads['name'], PATHINFO_EXTENSION));
-
-        if($uploadsFileType != "html" /*&& $uploadsFileType != "zip"*/) {
-            $this->uploadsError = 'Only HTML files allowed';
-            return;
-        }
-
-        if($fileUploads['size'] > 5000000) {
-            $this->coverImageError = 'File size exceeds limit of 5MB';
-            return;
-        }
-
-        $gameId = $gameModel->create(
-            $user->getId(), 
-            $this->title, 
-            $this->description, 
-            $this->genreId,
-            $coverImageUrl
-        );
-
-        $path = UPLOADS_PATH . "/games/{$gameId}";
-
-        if(!mkdir($path, 0777, true)) {
-            die('Failed to create directories');
-        }
-
-        mkdir($path . "/assets");
-
-        $coverImageDest = $path . "/assets/" . $coverImageUrl;
-        
-        move_uploaded_file($fileCoverImage['tmp_name'], $coverImageDest);
-
-        mkdir($path . "/dist");
-
-        if($uploadsFileType == "zip") {
-            /*$zip = new \ZipArchive;
-            if ($zip->open($fileUploads['tmp_name']) == true) {
-                $zip->extractTo($path . "/dist");
-                $zip->close();
-            } else {
-                die('Failed to extract files');
+            if(empty($_POST['title'])) {
+                $this->titleError = 'Field is required';
+                $success = false;
             }
 
-            function removePhpFiles(string $dirPath) {
-                $files = array_diff(scandir($dirPath), array('..', '.'));
+            $fileCoverImage = $_FILES['cover-image'];
 
-                foreach($files as $file) {
-                    if(is_dir($file)) {
-                        removePhpFiles($file);
-                    } else if(strtolower(pathinfo($file, PATHINFO_EXTENSION)) == "php") {
-                        unlink($file);
-                    }
+            if ($fileCoverImage['error'] == 4 || ($fileCoverImage['size'] == 0 && $fileCoverImage['error'] == 0)) {
+                $this->coverImageError = 'Field is required';
+                $success = false;
+            } else {
+                $coverImageFileType =  strtolower(pathinfo($fileCoverImage['name'], PATHINFO_EXTENSION));
+                $coverImageUrl = (string)time() . (string)rand(10, 100) . '.' .$coverImageFileType;
+
+                $coverImageCheck = getimagesize($_FILES["cover-image"]["tmp_name"]);
+                if($coverImageCheck == false) {
+                    $this->coverImageError = 'File is not an image';
+                    $success = false;
+                } elseif(!in_array($coverImageFileType, self::COVER_IMAGE_FILE_TYPES)) {
+                    $this->coverImageError = 'Only JPG, JPEG & GIF files allowed';
+                    $success = false;
+                } elseif($fileCoverImage['size'] > self::MAX_COVER_IMAGE_SIZE) {
+                    $this->coverImageError = 'Image size exceeds limit of 30KB';
+                    $success = false;
                 }
             }
 
-            removePhpFiles($path . "/dist");*/
+            $fileUploads = $_FILES['uploads'];
 
+            if ($fileUploads['error'] == 4 || ($fileUploads['size'] == 0 && $fileUploads['error'] == 0)) {
+                $this->uploadsError = 'Field is required';
+                $success = false;
+            } else {
+                $uploadsFileType =  strtolower(pathinfo($fileUploads['name'], PATHINFO_EXTENSION));
+
+                if($uploadsFileType != "html") {
+                    $this->uploadsError = 'Only HTML files allowed';
+                    $success = false;
+                } elseif($fileUploads['size'] > self::MAX_UPLOADS_SIZE) {
+                    $this->coverImageError = 'File size exceeds limit of 5MB';
+                    $success = false;
+                }
+            }
+
+            if($success) {
+                $gameId = $gameModel->create(
+                    $user->getId(), 
+                    $this->title, 
+                    $this->description, 
+                    $this->genreId,
+                    $coverImageUrl
+                );
+    
+                $path = UPLOADS_PATH . "/games/{$gameId}";
+    
+                if(!mkdir($path, 0777, true)) {
+                    die('Failed to create directories');
+                }
+    
+                mkdir($path . "/assets");
+    
+                $coverImageDest = $path . "/assets/" . $coverImageUrl;
+            
+                move_uploaded_file($fileCoverImage['tmp_name'], $coverImageDest);
+    
+                mkdir($path . "/dist");
+    
+                $uploadsFileDist = $path . "/dist/index.html";
+    
+                move_uploaded_file($fileUploads['tmp_name'], $uploadsFileDist);
+
+            }
+        }
+
+        if($success) {
+            header("Location: game-details.php?id={$gameId}", true);
         } else {
-            $uploadsFileDist = $path . "/dist/index.html";
+            $this->errorMessage = 'Game details failed to save!';
 
-            move_uploaded_file($fileUploads['tmp_name'], $uploadsFileDist);
+            header("Location: upload-game.php?id={$gameId}&title={$this->title}&description={$this->description}&genreId={$this->genreId}&titleError={$this->titleError}&uploadsError={$this->uploadsError}&coverImageError={$this->coverImageError}&errorMessage={$this->errorMessage}&successMessage={$this->successMessage}", true);
         }
 
     }
 
     public function loadGameDetails($gameId) {
         $gameModel = new GameModel();
+        $gameStarModel = new GameStarModel();
 
         $data = $gameModel->getById($gameId);
+
+        $user = $this->getUser();
+        if($user != null) {
+            $this->starred = $gameStarModel->exists($user->getId(), $gameId);
+        }
 
         if($data != null) {
             $this->gameId = $data['id'];
@@ -222,6 +233,7 @@ class GamesController extends Controller {
             $this->genreName = $data['genre_name'];
             $this->createdAt = $data['created_at'];
             $this->updatedAt = $data['updated_at'];
+            $this->starCount = $data['star_count'];
         }
     }
 
@@ -321,11 +333,11 @@ class GamesController extends Controller {
             if($coverImageCheck == false) {
                 $this->coverImageError = 'File is not an image';
                 $success = false;
-            } elseif($coverImageFileType != "png" && $coverImageFileType != "jpg" && $coverImageFileType != "jpeg" && $coverImageFileType != "gif") {
-                $this->coverImageError = 'Only PNG, JPG, JPEG & GIF files allowed';
+            } elseif(!in_array($coverImageFileType, self::COVER_IMAGE_FILE_TYPES)) {
+                $this->coverImageError = 'Only JPG, JPEG & GIF files allowed';
                 $success = false;
-            } elseif($fileCoverImage['size'] > 500000) {
-                $this->coverImageError = 'Image size exceeds limit of 500KB';
+            } elseif($fileCoverImage['size'] > self::MAX_COVER_IMAGE_SIZE) {
+                $this->coverImageError = 'Image size exceeds limit of 30KB';
                 $success = false;
             }
         }
@@ -369,7 +381,7 @@ class GamesController extends Controller {
                 $success = false;
             }
 
-            if($fileUploads['size'] > 5000000) {
+            if($fileUploads['size'] > self::MAX_UPLOADS_SIZE) {
                 $this->uploadsError = 'File size exceeds limit of 5MB';
                 $success = false;
             }
@@ -391,6 +403,39 @@ class GamesController extends Controller {
         }
 
         return $success;
+    }
+
+    public function toggleStar() {
+        $gameStarModel = new GameStarModel();
+
+        $success = true;
+        $result = [ 'data' => null ];
+
+        $user = $this->getUser();
+        if($user == null) {
+            $result['errorMessage'] = 'Unauthorized 401';
+            $success = false;
+        } elseif(empty($_POST['gameId'])) {
+            $result['errorMessage'] = 'Some fields are missing';
+            $success = false;
+        }
+
+        if($success) {
+            $userId = $user->getId();
+            $gameId = $_POST['gameId'];
+
+            $starred = $gameStarModel->exists($userId, $gameId);
+            if($starred) {
+                $gameStarModel->delete($userId, $gameId);
+            } else {
+                $gameStarModel->create($userId, $gameId);
+            }
+            $result['data'] = [ 'starred' => $starred == false ];
+
+            $this->starred = $starred == false;
+        }
+
+        echo json_encode($result);
     }
 
     public function gamesView(): string {
@@ -507,5 +552,13 @@ class GamesController extends Controller {
 
     public function getErrorMessage() {
         return $this->errorMessage;
+    }
+
+    public function getStarCount() {
+        return $this->starCount;
+    }
+
+    public function isStarred() {
+        return $this->starred;
     }
 }

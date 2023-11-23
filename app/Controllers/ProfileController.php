@@ -6,6 +6,7 @@ use App\Controller;
 use App\View;
 use App\Models\UserModel;
 use App\Auth\AuthContext;
+use App\Models\GameModel;
 
 class ProfileController extends Controller {
 
@@ -25,7 +26,17 @@ class ProfileController extends Controller {
 
     private string $errorMessage;
 
+    private int $countPerPage = 10;
+
+    private int $page;
+
+    private array $games = [];
+
+    private int $gameCount = 0;
+
     public function __construct() {
+        $this->page = $_GET['page'] ?? 1;
+
         $this->userId = null;
         $this->active = false;
         $this->username = "";
@@ -65,6 +76,18 @@ class ProfileController extends Controller {
         if(isset($_GET['errorMessage'])) {
             $this->errorMessage = $_GET['errorMessage'];
         }
+    }
+
+    public function loadGames() {
+        $gameModel = new GameModel();
+
+        if($this->userId == null) {
+            return;
+        }
+
+        $result = $gameModel->getByParams("", $this->page, $this->countPerPage, 3, 0, $this->userId);
+        $this->games = $result['data'];
+        $this->gameCount = $result['count'];
     }
 
     public function loadProfile() {
@@ -173,5 +196,21 @@ class ProfileController extends Controller {
 
     public function getErrorMessage() {
         return $this->errorMessage;
+    }
+
+    public function getGames() {
+        return $this->games;
+    }
+
+    public function getGameCount() {
+        return $this->gameCount;
+    }
+
+    public function getCurrentPage() {
+        return $this->page;
+    }
+
+    public function getLastPage() {
+        return (int)($this->gameCount / $this->countPerPage) + 1;
     }
 }

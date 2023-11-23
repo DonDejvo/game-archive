@@ -6,8 +6,8 @@ use App\Model;
 
 class GameModel extends Model {
     
-    public function getByParams(string $search, int $page, int $count, int $filter, int $genre) {
-        $query = 'SELECT `games`.`id`, `games`.`title`, `games`.`user_id`, `games`.`genre_id`, `games`.`cover_image_url`, `games`.`created_at`, `games`.`updated_at`, `users`.`username`, `game_genres`.`name` as `genre_name` FROM `games` RIGHT JOIN `users` ON `games`.`user_id` = `users`.`id` INNER JOIN `game_genres` ON `games`.`genre_id` = `game_genres`.`id` WHERE 1';
+    public function getByParams(string $search, int $page, int $count, int $filter, int $genre, int $userId) {
+        $query = 'SELECT `games`.`id`, `games`.`title`, `games`.`user_id`, `games`.`genre_id`, `games`.`cover_image_url`, `games`.`created_at`, `games`.`updated_at`, `users`.`username`, `game_genres`.`name` as `genre_name`, (SELECT COUNT(*) FROM `game_stars` WHERE `game_id` = `games`.`id`) as `star_count` FROM `games` RIGHT JOIN `users` ON `games`.`user_id` = `users`.`id` INNER JOIN `game_genres` ON `games`.`genre_id` = `game_genres`.`id` WHERE 1';
         $params = [];
 
         if(strlen($search) > 0) {
@@ -20,14 +20,22 @@ class GameModel extends Model {
             $params[] = $genre;
         }
 
-        /*switch($filter) {
+        switch($filter) {
             case 1:
-                $query .= ' ORDER BY `updated_at`';
+                $query .= ' ORDER BY `updated_at` DESC';
                 break;
             case 2:
-                $query .= ' ORDER BY `stars`';
+                $query .= ' ORDER BY `star_count` DESC';
                 break;
-        }*/
+            case 3:
+                $query .= ' AND `games`.`user_id` = ? ORDER BY `updated_at` DESC';
+                $params[] = $userId;
+                break;
+            case 4:
+                $query .= ' AND `games`.`id` IN (SELECT `game_stars`.`game_id` FROM `game_stars` WHERE `game_stars`.`user_id` = ?) ORDER BY `updated_at` DESC';
+                $params[] = $userId;
+                break;
+        }
 
         $stmtCount = $this->db->prepare($query);
         $stmtCount->execute($params);
@@ -63,7 +71,7 @@ class GameModel extends Model {
 
     public function getById(string $id) {
         $stmt = $this->db->prepare(
-            'SELECT `games`.`id`, `games`.`title`, `games`.`description`, `games`.`user_id`, `games`.`genre_id`, `games`.`cover_image_url`, `games`.`created_at`, `games`.`updated_at`, `users`.`username`, `game_genres`.`name` as `genre_name` FROM `games` RIGHT JOIN `users` ON `games`.`user_id` = `users`.`id` INNER JOIN `game_genres` ON `games`.`genre_id` = `game_genres`.`id` WHERE `games`.`id` = ?'
+            'SELECT `games`.`id`, `games`.`title`, `games`.`description`, `games`.`user_id`, `games`.`genre_id`, `games`.`cover_image_url`, `games`.`created_at`, `games`.`updated_at`, `users`.`username`, `game_genres`.`name` as `genre_name`, (SELECT COUNT(*) FROM `game_stars` WHERE `game_id` = `games`.`id`) as `star_count` FROM `games` RIGHT JOIN `users` ON `games`.`user_id` = `users`.`id` INNER JOIN `game_genres` ON `games`.`genre_id` = `game_genres`.`id` WHERE `games`.`id` = ?'
         );
 
         $stmt->execute([$id]);

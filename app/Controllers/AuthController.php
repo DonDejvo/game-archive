@@ -65,10 +65,14 @@ class AuthController extends Controller {
             if($passwordLength < 8) {
                 $this->passwordError = 'Password must have at least 8 characters';
                 $success = false;
-            } elseif(empty($_POST['repeat-password'])) {
-                $this->repeatPasswordError = 'Field is reuqired';
-                $success = false;
-            } elseif($this->password != $this->repeatPassword) {
+            }
+        }
+
+        if(empty($_POST['repeat-password'])) {
+            $this->repeatPasswordError = 'Field is reuqired';
+            $success = false;
+        } else {
+            if($this->password != $this->repeatPassword) {
                 $this->repeatPasswordError = 'Passwords does not match';
                 $success = false;
             }

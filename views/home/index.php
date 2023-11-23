@@ -7,6 +7,6 @@
 </head>
 <body>
     <?php include(VIEW_PATH . '/partials/header.php'); ?>
-    home
+    <h2>Welcome friend</h2 >
 </body>
 </html>

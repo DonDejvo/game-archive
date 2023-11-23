@@ -7,17 +7,8 @@ use App\Middleware;
 
 $controller = new GamesController();
 
-Middleware::protectedRoute();
-
-$controller->loadGameGenres();
-
 switch($_SERVER['REQUEST_METHOD']) {
-    case 'GET':
-        $controller->loadParams();
-        break;
     case 'POST':
-        $controller->uploadGame();
+        $controller->toggleStar();
         break;
 }
-
-echo $controller->uploadGameView();
