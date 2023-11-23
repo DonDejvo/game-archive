@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $controller->getGameId() != null ?  "{$controller->getTitle()}" : "404 Game not found" ?></title>
+    <link rel="stylesheet" href="css/games.css" />
 </head>
 <body>
     <?php include(VIEW_PATH . '/partials/header.php'); ?>
@@ -22,7 +23,7 @@
         <br />
         Last modified: <span><?= date("m/d/Y", strtotime($controller->getUpdatedAt())) ?></span>
         <br />
-        <p><?= htmlspecialchars($controller->getDescription(), ENT_QUOTES) ?></p>
+        Description: <p class="game-details__description"><?= htmlspecialchars($controller->getDescription(), ENT_QUOTES) ?></p>
         <ul>
             <li>
                 <a href="<?= 'uploads/games/' . $controller->getGameId() . '/dist/index.html' ?>" target="_blank">Play game</a>

@@ -26,7 +26,7 @@ class GamesController extends Controller {
 
     private array $gameGenres = [];
 
-    const MAX_COVER_IMAGE_SIZE = 30000;
+    const MAX_COVER_IMAGE_SIZE = 50000;
 
     const COVER_IMAGE_FILE_TYPES = ["jpg", "jpeg", "gif"];
 
@@ -206,7 +206,15 @@ class GamesController extends Controller {
         } else {
             $this->errorMessage = 'Game details failed to save!';
 
-            header("Location: upload-game.php?id={$gameId}&title={$this->title}&description={$this->description}&genreId={$this->genreId}&titleError={$this->titleError}&uploadsError={$this->uploadsError}&coverImageError={$this->coverImageError}&errorMessage={$this->errorMessage}&successMessage={$this->successMessage}", true);
+            $title = urlencode($this->title);
+            $description = urlencode($this->description);
+            $titleError = urlencode($this->titleError);
+            $uploadsError = urlencode($this->uploadsError);
+            $coverImageError = urlencode($this->coverImageError);
+            $errorMessage = urlencode($this->errorMessage);
+            $successMessage = urlencode($this->successMessage);
+            $location = "edit-game.php?id={$gameId}&title={$title}&description={$description}&genreId={$this->genreId}&titleError={$titleError}&uploadsError={$uploadsError}&coverImageError={$coverImageError}&errorMessage={$errorMessage}&successMessage={$successMessage}";
+            header("Location: {$location}", true);
         }
 
     }
@@ -239,28 +247,28 @@ class GamesController extends Controller {
 
     public function loadParams() {
         if(isset($_GET['title'])) {
-            $this->title = $_GET['title'];
+            $this->title = urldecode($_GET['title']);
         }
         if(isset($_GET['description'])) {
-            $this->description = $_GET['description'];
+            $this->description = urldecode($_GET['description']);
         }
         if(isset($_GET['genreId'])) {
             $this->genreId = $_GET['genreId'];
         }
         if(isset($_GET['titleError'])) {
-            $this->titleError = $_GET['titleError'];
+            $this->titleError = urldecode($_GET['titleError']);
         }
         if(isset($_GET['coverImageError'])) {
-            $this->coverImageError = $_GET['coverImageError'];
+            $this->coverImageError = urldecode($_GET['coverImageError']);
         }
         if(isset($_GET['uploadsError'])) {
-            $this->uploadsError = $_GET['uploadsError'];
+            $this->uploadsError = urldecode($_GET['uploadsError']);
         }
         if(isset($_GET['successMessage'])) {
-            $this->successMessage = $_GET['successMessage'];
+            $this->successMessage = urldecode($_GET['successMessage']);
         }
         if(isset($_GET['errorMessage'])) {
-            $this->errorMessage = $_GET['errorMessage'];
+            $this->errorMessage = urldecode($_GET['errorMessage']);
         }
     }
 
@@ -290,7 +298,15 @@ class GamesController extends Controller {
             }
         }
 
-        header("Location: edit-game.php?id={$gameId}&title={$this->title}&description={$this->description}&genreId={$this->genreId}&titleError={$this->titleError}&uploadsError={$this->uploadsError}&coverImageError={$this->coverImageError}&errorMessage={$this->errorMessage}&successMessage={$this->successMessage}", true);
+        $title = urlencode($this->title);
+        $description = urlencode($this->description);
+        $titleError = urlencode($this->titleError);
+        $uploadsError = urlencode($this->uploadsError);
+        $coverImageError = urlencode($this->coverImageError);
+        $errorMessage = urlencode($this->errorMessage);
+        $successMessage = urlencode($this->successMessage);
+        $location = "edit-game.php?id={$gameId}&title={$title}&description={$description}&genreId={$this->genreId}&titleError={$titleError}&uploadsError={$uploadsError}&coverImageError={$coverImageError}&errorMessage={$errorMessage}&successMessage={$successMessage}";
+        header("Location: {$location}", true);
     }
 
     public function updateDetails(int $gameId) {
@@ -347,6 +363,12 @@ class GamesController extends Controller {
 
             $path = UPLOADS_PATH . "/games/{$gameId}";
 
+            if(!is_dir($path . "/assets")) {
+                if(!mkdir($path . "/assets", 0777, true)) {
+                    die('Failed to create directories');
+                }
+            }
+
             $oldCoverImageDest = $path . "/assets/" . $this->coverImageUrl;
 
             if(file_exists($oldCoverImageDest)) {
@@ -376,7 +398,7 @@ class GamesController extends Controller {
         } else {
             $uploadsFileType =  strtolower(pathinfo($fileUploads['name'], PATHINFO_EXTENSION));
 
-            if($uploadsFileType != "html" /*&& $uploadsFileType != "zip"*/) {
+            if($uploadsFileType != "html") {
                 $this->uploadsError = 'Only HTML files allowed';
                 $success = false;
             }
@@ -389,6 +411,12 @@ class GamesController extends Controller {
 
         if($success) {
             $path = UPLOADS_PATH . "/games/{$gameId}";
+
+            if(!is_dir($path . "/dist")) {
+                if(!mkdir($path . "/dist", 0777, true)) {
+                    die('Failed to create directories');
+                }
+            }
 
             $uploadsFileDist = $path . "/dist/index.html";
 

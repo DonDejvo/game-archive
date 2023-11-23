@@ -62,19 +62,19 @@ class ProfileController extends Controller {
 
     public function loadParams() {
         if(isset($_GET['username'])) {
-            $this->username = $_GET['username'];
+            $this->username = urldecode($_GET['username']);
         }
         if(isset($_GET['bio'])) {
-            $this->bio = $_GET['bio'];
+            $this->bio = urldecode($_GET['bio']);
         }
         if(isset($_GET['usernameError'])) {
-            $this->usernameError = $_GET['usernameError'];
+            $this->usernameError = urldecode($_GET['usernameError']);
         }
         if(isset($_GET['successMessage'])) {
-            $this->successMessage = $_GET['successMessage'];
+            $this->successMessage = urldecode($_GET['successMessage']);
         }
         if(isset($_GET['errorMessage'])) {
-            $this->errorMessage = $_GET['errorMessage'];
+            $this->errorMessage = urldecode($_GET['errorMessage']);
         }
     }
 
@@ -154,10 +154,17 @@ class ProfileController extends Controller {
             AuthContext::logIn($userModel->getById($user->getId()));
 
             $this->successMessage = 'User details saved successfully!';
-            header("Location: edit-profile.php?successMessage={$this->successMessage}", true);
+
+            $successMessage = urlencode($this->successMessage);
+            header("Location: edit-profile.php?successMessage={$successMessage}", true);
         } else {
             $this->errorMessage = 'User details failed to save!';
-            header("Location: edit-profile.php?username={$this->username}&bio={$this->bio}&usernameError={$this->usernameError}&errorMessage={$this->errorMessage}", true);
+
+            $username = urlencode($this->username);
+            $bio = urlencode($this->bio);
+            $usernameError = urlencode($this->usernameError);
+            $errorMessage = urlencode($this->errorMessage);
+            header("Location: edit-profile.php?username={$username}&bio={$bio}&usernameError={$usernameError}&errorMessage={$errorMessage}", true);
         }
         
     }

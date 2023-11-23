@@ -11,14 +11,15 @@ $showAuthor = false;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $controller->getUserId() != null ? "{$controller->getUsername()}'s profile" : "404 Profile not found" ?></title>
     <link rel="stylesheet" href="css/pagination.css" />
+    <link rel="stylesheet" href="css/profile.css" />
 </head>
 <body>
     <?php include(VIEW_PATH . '/partials/header.php'); ?>
     <?php if($controller->getUserId() != null): ?>
         <h2><?= htmlspecialchars($controller->getUsername(), ENT_QUOTES) ?></h2>
-        Registered from: <span><?= date("m/d/Y", strtotime($controller->getRegisterDate())) ?></span>
+        Register date: <span><?= date("m/d/Y", strtotime($controller->getRegisterDate())) ?></span>
         <br />
-        <p><?= htmlspecialchars($controller->getBio(), ENT_QUOTES) ?></p>
+        Bio: <p class="profile__bio"><?= htmlspecialchars($controller->getBio(), ENT_QUOTES) ?></p>
         <?php if($controller->getUserId() == $controller->getUser()?->getId()): ?>
             <a href="edit-profile.php">Edit profile</a>
             <br />

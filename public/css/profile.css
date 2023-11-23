@@ -1,0 +1,6 @@
+.profile__bio {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.3;
+}

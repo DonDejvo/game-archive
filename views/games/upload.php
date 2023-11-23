@@ -23,16 +23,16 @@
             <label for="cover-image">Cover Image</label>
             <input id="cover-image" name="cover-image" type="file" required />
             <span class="text-warn">* </span>
-            <span class="text-error"><?= $controller->getCoverImageError() ?></span>
+            <span class="text-error"><?= htmlspecialchars($controller->getCoverImageError(), ENT_QUOTES) ?></span>
             <br />
             <ul>
-                <li>Max image size 30KB</li>
+                <li>Max image size 50KB</li>
                 <li>Only JPG, JPEG or GIF</li>
             </ul>
             <label for="title">Title</label>
             <input id="title" name="title" type="text" value="<?= htmlspecialchars($controller->getTitle(), ENT_QUOTES) ?>" required />
             <span class="text-warn">* </span>
-            <span class="text-error"><?= $controller->getTitleError() ?></span>
+            <span class="text-error"><?= htmlspecialchars($controller->getTitleError(), ENT_QUOTES) ?></span>
             <br />
             <label for="genre">Genre</label>
             <select id="genre" name="genre">
@@ -55,7 +55,7 @@
             <label for="uploads">Uploads</label>
             <input id="uploads" name="uploads" type="file" required />
             <span class="text-warn">* </span>
-            <span class="text-error"><?= $controller->getUploadsError() ?></span>
+            <span class="text-error"><?= htmlspecialchars($controller->getUploadsError(), ENT_QUOTES) ?></span>
             <br />
             <ul>
                 <li>Max file size 5MB</li>

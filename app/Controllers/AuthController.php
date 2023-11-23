@@ -22,10 +22,10 @@ class AuthController extends Controller {
     private string $repeatPasswordError;
 
     public function __construct() {
-        $this->username = $_GET['username'] ?? "";
-        $this->usernameError = $_GET['usernameError'] ?? "";
-        $this->passwordError = $_GET['passwordError'] ?? "";
-        $this->repeatPasswordError = $_GET['repeatPasswordError'] ?? "";
+        $this->username = urldecode($_GET['username'] ?? "");
+        $this->usernameError = urldecode($_GET['usernameError'] ?? "");
+        $this->passwordError = urldecode($_GET['passwordError'] ?? "");
+        $this->repeatPasswordError = urldecode($_GET['repeatPasswordError'] ?? "");
         $this->password = "";
         $this->repeatPassword = "";
     }
@@ -99,7 +99,12 @@ class AuthController extends Controller {
             header("Location: profile.php", true);
         } else {
 
-            header("Location: register.php?username={$this->username}&usernameError={$this->usernameError}&passwordError={$this->passwordError}&repeatPasswordError={$this->repeatPasswordError}", true);
+            $username = urlencode($this->username);
+            $usernameError = urlencode($this->usernameError);
+            $passwordError = urlencode($this->passwordError);
+            $repeatPasswordError = urlencode($this->repeatPasswordError);
+
+            header("Location: register.php?username={$username}&usernameError={$usernameError}&passwordError={$passwordError}&repeatPasswordError={$repeatPasswordError}", true);
         }
     }
 
@@ -141,7 +146,11 @@ class AuthController extends Controller {
             header("Location: profile.php", true);
         } else {
 
-            header("Location: login.php?username={$this->username}&usernameError={$this->usernameError}&passwordError={$this->passwordError}", true);
+            $username = urlencode($this->username);
+            $usernameError = urlencode($this->usernameError);
+            $passwordError = urlencode($this->passwordError);
+            
+            header("Location: login.php?username={$username}&usernameError={$usernameError}&passwordError={$passwordError}", true);
         }
     }
 

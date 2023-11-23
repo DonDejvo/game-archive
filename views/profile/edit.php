@@ -19,7 +19,7 @@
             <label for="username">Username</label>
             <input id="username" name="username" type="text" value="<?= htmlspecialchars($controller->getUsername(), ENT_QUOTES) ?>" required />
             <span class="text-warn">* </span>
-            <span class="text-error"><?= $controller->getUsernameError() ?></span>
+            <span class="text-error"><?= htmlspecialchars($controller->getUsernameError(), ENT_QUOTES) ?></span>
             <br />
             <label for="bio">Bio</label>
             <textarea id="bio" name="bio" rows="8" cols="48"><?= htmlspecialchars($controller->getBio(), ENT_QUOTES) ?></textarea>
