@@ -39,7 +39,7 @@
             </select>
             <br />
             <label for="description">Description</label>
-            <textarea id="description" name="description" rows="8" cols="48"><?= htmlspecialchars($controller->getDescription(), ENT_QUOTES) ?></textarea>
+            <textarea id="description" name="description" rows="8" cols="48" maxlength="1000"><?= htmlspecialchars($controller->getDescription(), ENT_QUOTES) ?></textarea>
             <br />
             <button name="save-details" type="submit">Save</button>
         </form>

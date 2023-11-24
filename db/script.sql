@@ -2,7 +2,7 @@ CREATE TABLE `games`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `user_id` BIGINT UNSIGNED NOT NULL,
     `title` VARCHAR(255) NOT NULL,
-    `description` VARCHAR(255) NOT NULL,
+    `description` VARCHAR(1000),
     `created_at` DATETIME NOT NULL,
     `genre_id` BIGINT UNSIGNED NOT NULL,
     `updated_at` DATETIME NOT NULL,
@@ -25,7 +25,7 @@ ALTER TABLE
 CREATE TABLE `users`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(255) NOT NULL,
-    `bio` VARCHAR(255),
+    `bio` VARCHAR(1000),
     `created_at` DATETIME NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `updated_at` DATETIME NOT NULL,

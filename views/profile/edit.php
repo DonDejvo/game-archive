@@ -22,7 +22,7 @@
             <span class="text-error"><?= htmlspecialchars($controller->getUsernameError(), ENT_QUOTES) ?></span>
             <br />
             <label for="bio">Bio</label>
-            <textarea id="bio" name="bio" rows="8" cols="48"><?= htmlspecialchars($controller->getBio(), ENT_QUOTES) ?></textarea>
+            <textarea id="bio" name="bio" rows="8" cols="48" maxlength="1000"><?= htmlspecialchars($controller->getBio(), ENT_QUOTES) ?></textarea>
             <br />
             <button type="submit">Save</button>
         </form>
