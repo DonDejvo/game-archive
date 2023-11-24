@@ -182,6 +182,8 @@ class GamesController extends Controller {
                 );
     
                 $path = UPLOADS_PATH . "/games/{$gameId}";
+
+                Utils::rrmdir($path);
     
                 if(!mkdir($path, 0777, true)) {
                     die('Failed to create directories');
