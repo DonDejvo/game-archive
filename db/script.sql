@@ -35,11 +35,11 @@ CREATE TABLE `users`(
 ALTER TABLE
     `users` ADD UNIQUE `users_username_unique`(`username`);
 ALTER TABLE
-    `games` ADD CONSTRAINT `games_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `users`(`id`);
+    `games` ADD CONSTRAINT `games_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE;
 ALTER TABLE
-    `game_stars` ADD CONSTRAINT `game_stars_game_id_foreign` FOREIGN KEY(`game_id`) REFERENCES `games`(`id`);
+    `game_stars` ADD CONSTRAINT `game_stars_game_id_foreign` FOREIGN KEY(`game_id`) REFERENCES `games`(`id`) ON DELETE CASCADE;
 ALTER TABLE
-    `game_stars` ADD CONSTRAINT `game_stars_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `users`(`id`);
+    `game_stars` ADD CONSTRAINT `game_stars_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE;
 ALTER TABLE
     `games` ADD CONSTRAINT `games_genre_id_foreign` FOREIGN KEY(`genre_id`) REFERENCES `game_genres`(`id`);
 

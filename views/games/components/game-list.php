@@ -10,6 +10,7 @@
             <?php endif; ?>
             <th>Last modified</th>
             <th>Stars</th>
+            <th></th>
         </tr>
         <?php foreach($games as $game): ?>
             <tr>
@@ -31,6 +32,16 @@
                     <?= date("m/d/Y", strtotime($game['updated_at'])) ?>
                 </td>
                 <td><?= $game['star_count'] ?></td>
+                <td>
+                    <?php if($game['user_id'] == $userId): ?>
+                        <button class="delete-btn">Delete</button>
+                        <div class="delete-dialog" data-game-id="<?= $game['id'] ?>" hidden>
+                            Are you sure?
+                            <button class="confirm-delete-btn">Yes</button>
+                            <button class="cancel-delete-btn">No</button>
+                        </div>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php endforeach; ?>
     </table>
@@ -41,3 +52,4 @@
         <h4>No matching results</h4>
     <?php endif; ?>
 </div>
+<script src="js/game-list.js"></script>

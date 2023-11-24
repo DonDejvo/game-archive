@@ -3,6 +3,7 @@ $games = $controller->getGames();
 $currentPage = $controller->getCurrentPage();
 $lastPage = $controller->getLastPage();
 $showAuthor = false;
+$userId = $controller->getUser()?->getId() ?? 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">

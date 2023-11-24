@@ -7,6 +7,7 @@ use App\View;
 use App\Models\GameModel;
 use App\Models\GameGenreModel;
 use App\Models\GameStarModel;
+use App\Utils;
 
 class GamesController extends Controller {
 
@@ -272,6 +273,32 @@ class GamesController extends Controller {
         }
     }
 
+    public function deleteGame(int $gameId) {
+
+        $gameModel = new GameModel();
+
+        $game = $gameModel->getById($gameId);
+        if($game == null) {
+            $this->errorMessage = 'Resource not found 404';
+            return;
+        }
+
+        $user = $this->getUser();
+        if($user == null || $user->getId() != $game['user_id']) {
+            $this->errorMessage = 'Unauthorized 401';
+            return;
+        }
+
+        $gameModel->delete($gameId);
+
+        $path = UPLOADS_PATH . "/games/{$gameId}";
+
+        Utils::rrmdir($path);
+
+        $this->successMessage = 'Game deleted successfully';
+        
+    }
+
     public function updateGame(int $gameId) {
 
         $this->titleError = "";
@@ -480,6 +507,10 @@ class GamesController extends Controller {
 
     public function editGameView(): string {
         return View::make('games/edit', $this);
+    }
+
+    public function deleteGameView(): string {
+        return View::make('games/delete', $this);
     }
 
     public function getGameId() {

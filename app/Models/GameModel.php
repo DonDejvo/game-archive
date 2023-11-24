@@ -52,7 +52,7 @@ class GameModel extends Model {
         return [ 'data' => $data, 'count' => $count ];
     }
 
-    public function update(string $id, string $title, string $description, int $genreId, string $coverImageUrl) {
+    public function update(int $id, string $title, string $description, int $genreId, string $coverImageUrl) {
         $query = 'UPDATE `games` SET `title` = ?, `description` = ?, `genre_id` = ?, `cover_image_url` = ?, `updated_at` = NOW() WHERE `id` = ?';
         $stmt = $this->db->prepare($query);
 
@@ -69,7 +69,7 @@ class GameModel extends Model {
         return (int) $this->db->lastInsertId();
     }
 
-    public function getById(string $id) {
+    public function getById(int $id) {
         $stmt = $this->db->prepare(
             'SELECT `games`.`id`, `games`.`title`, `games`.`description`, `games`.`user_id`, `games`.`genre_id`, `games`.`cover_image_url`, `games`.`created_at`, `games`.`updated_at`, `users`.`username`, `game_genres`.`name` as `genre_name`, (SELECT COUNT(*) FROM `game_stars` WHERE `game_id` = `games`.`id`) as `star_count` FROM `games` RIGHT JOIN `users` ON `games`.`user_id` = `users`.`id` INNER JOIN `game_genres` ON `games`.`genre_id` = `game_genres`.`id` WHERE `games`.`id` = ?'
         );
@@ -81,5 +81,13 @@ class GameModel extends Model {
         }
 
         return null;
+    }
+
+    public function delete(int $id) {
+        $query = 'DELETE FROM `games` WHERE `id` = ?';
+    
+        $stmt = $this->db->prepare($query);
+    
+        return $stmt->execute([$id]);
     }
 }
