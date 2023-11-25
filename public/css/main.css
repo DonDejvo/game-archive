@@ -30,6 +30,10 @@
     border-radius: 9999px;
 }
 
+.btn-hidden {
+    display: none;
+}
+
 .btn:hover {
     color: #d9dbdf;
     border-color: #d9dbdf;

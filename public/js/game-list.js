@@ -6,12 +6,12 @@ const cancelDeleteBtnArray = document.getElementsByClassName("cancel-delete-btn"
 for (let i = 0; i < deleteBtnArray.length; ++i) {
 
     deleteBtnArray[i].addEventListener("click", function (e) {
-        deleteBtnArray[i].hidden = true;
+        deleteBtnArray[i].classList.add("btn-hidden");
         deleteDialogArray[i].hidden = false;
     });
 
     cancelDeleteBtnArray[i].addEventListener("click", function (e) {
-        deleteBtnArray[i].hidden = false;
+        deleteBtnArray[i].classList.remove("btn-hidden");
         deleteDialogArray[i].hidden = true;
     });
 
