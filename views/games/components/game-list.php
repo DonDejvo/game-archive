@@ -34,11 +34,11 @@
                 <td><?= $game['star_count'] ?></td>
                 <td>
                     <?php if($game['user_id'] == $userId): ?>
-                        <button class="delete-btn">Delete</button>
+                        <button class="delete-btn btn">Delete</button>
                         <div class="delete-dialog" data-game-id="<?= $game['id'] ?>" hidden>
                             Are you sure?
-                            <button class="confirm-delete-btn">Yes</button>
-                            <button class="cancel-delete-btn">No</button>
+                            <button class="confirm-delete-btn btn">Yes</button>
+                            <button class="cancel-delete-btn btn">No</button>
                         </div>
                     <?php endif; ?>
                 </td>
