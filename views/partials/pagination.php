@@ -29,3 +29,4 @@
     <?php endif; ?>
     </ul>
 </div>
+<script src="js/pagination.js"></script>

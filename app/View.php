@@ -32,7 +32,7 @@ class View {
 
         ob_start();
 
-        include $viewPath;
+        include VIEW_PATH . '/layout.php';
 
         return (string) ob_get_clean();
     }
