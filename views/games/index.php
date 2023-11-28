@@ -1,15 +1,16 @@
-<h2>Games</h2>
-<p>
-    <a href="upload-game.php">Upload game</a>
-</p>
-<form method="GET">
-    <label for="search">Search</label>
-    <input id="search" name="search" type="search"
-        value="<?= htmlspecialchars($controller->getSearch(), ENT_QUOTES) ?>">
-    <button type="button" id="search-btn" class="btn">Search</button>
-    <br />
-    <label for="filter">Filter</label>
-    <select id="filter" name="filter">
+<span class="brand">Games</span>
+<h1 class="title">Game List</h1>
+
+<form method="GET" class="games-filter-widget">
+    <div class="form-group">
+        <label for="search"></label>
+        <input id="search" class="form-control" name="search" type="search" value="<?= htmlspecialchars($controller->getSearch(), ENT_QUOTES) ?>" placeholder="Search by title">
+        <button type="button" id="search-btn" class="btn">Search</button>
+    </div>
+    <div class="form-group">
+        <label for="filter">Filter</label>
+        <div class="custom-select">
+        <select id="filter" name="filter">
         <?php
                 foreach($controller->getFilterOptions() as $filterName => $filter) {
                     [$filterValue, $userRequired] = $filter;
@@ -25,8 +26,12 @@
                     '</option>';
                 }
                 ?>
-    </select>
+        </select>
+        </div>
+    </div>
+    <div class="form-group">
     <label for="genre">Genre</label>
+    <div class="custom-select">
     <select id="genre" name="genre">
         <option value="0">All</option>
         <?php
@@ -41,6 +46,8 @@
                 }
                 ?>
     </select>
+    </div>
+    </div>
 </form>
 <?php
 $games = $controller->getGames();

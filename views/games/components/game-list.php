@@ -1,55 +1,43 @@
+<div style="margin-top: 1.5rem;">
 <?php if(count($games) > 0): ?>
-<div>
-    <table>
-        <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Genre</th>
-            <?php if($showAuthor): ?>
-            <th>Author</th>
-            <?php endif; ?>
-            <th>Last modified</th>
-            <th>Stars</th>
-            <th></th>
-        </tr>
+    <div class="games-grid">
         <?php foreach($games as $game): ?>
-            <tr>
-                <td>
-                    <img width="64" height="64" src="<?= 'uploads/games/' . $game['id'] . '/assets/' . $game['cover_image_url'] ?>" alt="cover image" />
-                </td>
-                <td>
-                    <a href="<?= 'game-details.php?id=' . $game['id'] ?>"><?= htmlspecialchars($game['title'], ENT_QUOTES) ?></a>
-                </td>
-                <td>
-                    <?= htmlspecialchars($game['genre_name'], ENT_QUOTES) ?>
-                </td>
-                <?php if($showAuthor): ?>
-                <td>
-                    <a href="<?= 'profile.php?id=' . $game['user_id'] ?>"><?= htmlspecialchars($game['username'], ENT_QUOTES) ?></a>
-                </td>
-                <?php endif; ?>
-                <td>
-                    <?= date("m/d/Y", strtotime($game['updated_at'])) ?>
-                </td>
-                <td><?= $game['star_count'] ?></td>
-                <td>
-                    <?php if($game['user_id'] == $userId): ?>
-                        <button class="delete-btn btn">Delete</button>
-                        <div class="delete-dialog" data-game-id="<?= $game['id'] ?>" hidden>
-                            Are you sure?
-                            <button class="confirm-delete-btn btn">Yes</button>
-                            <button class="cancel-delete-btn btn">No</button>
-                        </div>
-                    <?php endif; ?>
-                </td>
-            </tr>
+            <div class="games-card">
+                <div class="games-card-row">
+                    <a class="games-card__image-wrapper" href="<?= 'game-details.php?id=' . $game['id'] ?>">
+                        <img src="<?= 'uploads/games/' . $game['id'] . '/assets/' . $game['cover_image_url'] ?>" alt="cover image" />
+                    </a>
+                </div>
+                <div class="games-card-row">
+                    <span class="games-card__genre"><?= htmlspecialchars($game['genre_name'], ENT_QUOTES) ?></span>
+                    <span>•</span>
+                    <span class="games-card__date"><?= date("m/d/Y", strtotime($game['updated_at'])) ?></span>
+                </div>
+                <div class="games-card-row">
+                    <a class="games-card__title" href="<?= 'game-details.php?id=' . $game['id'] ?>">
+                        <?= htmlspecialchars($game['title'], ENT_QUOTES) ?>
+                    </a>
+                </div>
+                <div class="games-card-row">
+                    <a class="games-card__author" href="<?= 'profile.php?id=' . $game['user_id'] ?>">
+                        <?= htmlspecialchars($game['username'], ENT_QUOTES) ?>
+                    </a>
+                    <div class="games-card__stars">
+                        <span class="games-card__stars__star">★</span>
+                        <span class="games-card__stars__count"><?= $game['star_count'] ?></span>
+                    </div>
+                </div>
+            </div>
         <?php endforeach; ?>
-    </table>
-    <?php
-    include(VIEW_PATH . '/partials/pagination.php'); 
-    ?>
+    </div>
+    <div class="pagination-wrapper">
+    <?php include(VIEW_PATH . '/partials/pagination.php'); ?>
+    </div>
     <?php else: ?>
-        <h4>No matching results</h4>
+        <div class="games-grid-empty">
+            <p class="games-grid-empty__text">No matching results</p>
+        </div>
     <?php endif; ?>
 </div>
 <script src="js/game-list.js"></script>
+<script src="js/pagination.js"></script>

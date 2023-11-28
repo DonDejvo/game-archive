@@ -11,7 +11,7 @@ use App\Utils;
 
 class GamesController extends Controller {
 
-    private int $countPerPage = 10;
+    private int $countPerPage = 6;
 
     private string $search;
 
@@ -75,7 +75,7 @@ class GamesController extends Controller {
         $this->filter = $_GET['filter'] ?? 1;
         $this->genre = $_GET['genre'] ?? 0;
 
-        $this->gemeId = null;
+        $this->gameId = null;
         $this->userId = null;
         $this->title = "";
         $this->titleError = "";
@@ -222,7 +222,7 @@ class GamesController extends Controller {
 
     }
 
-    public function loadGameDetails($gameId) {
+    public function loadGameDetails(int $gameId) {
         $gameModel = new GameModel();
         $gameStarModel = new GameStarModel();
 

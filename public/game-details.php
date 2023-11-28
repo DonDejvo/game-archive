@@ -7,9 +7,11 @@ use App\Middleware;
 
 $controller = new GamesController();
 
+$gameId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
 switch($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $controller->loadGameDetails($_GET['id']);
+        $controller->loadGameDetails($gameId);
         break;
 }
 

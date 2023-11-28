@@ -18,10 +18,11 @@
             <?php include(VIEW_PATH . '/partials/sidebar.php'); ?>
             <main>
                 <section>
-                    <?php include($viewPath); ?>
+                    <article><?php include($viewPath); ?></article>
                 </section>
             </main>
         </div>
     </div>
+    <script src="js/custom-select.js"></script>
 </body>
 </html>
