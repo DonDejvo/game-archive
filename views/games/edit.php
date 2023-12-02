@@ -63,6 +63,7 @@
                 
                 <div>
                     <button name="save-details" type="submit" class="btn">Save</button>
+                    <a href="edit-game.php?id=<?= $controller->getGameId() ?>&activeTabName=details" class="btn">Reset</a>    
                 </div>
             </form>
         </div>

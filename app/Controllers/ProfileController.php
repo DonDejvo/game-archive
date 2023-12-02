@@ -34,6 +34,14 @@ class ProfileController extends Controller {
 
     private int $gameCount = 0;
 
+    private string $activeTabName;
+
+    private string $oldPasswordError;
+
+    private string $passwordError;
+
+    private string $repeatPasswordError;
+
     public function __construct() {
         $this->page = $_GET['page'] ?? 1;
 
@@ -45,6 +53,10 @@ class ProfileController extends Controller {
         $this->usernameError = "";
         $this->successMessage = "";
         $this->errorMessage = "";
+        $this->activeTabName = "details";
+        $this->oldPasswordError = "";
+        $this->passwordError = "";
+        $this->repeatPasswordError = "";
     }
 
     public function loadUserDetails($userId) {
@@ -75,6 +87,18 @@ class ProfileController extends Controller {
         }
         if(isset($_GET['errorMessage'])) {
             $this->errorMessage = urldecode($_GET['errorMessage']);
+        }
+        if(isset($_GET['oldPasswordError'])) {
+            $this->oldPasswordError = $_GET['oldPasswordError'];
+        }
+        if(isset($_GET['passwordError'])) {
+            $this->passwordError = $_GET['passwordError'];
+        }
+        if(isset($_GET['repeatPasswordError'])) {
+            $this->repeatPasswordError = $_GET['repeatPasswordError'];
+        }
+        if(isset($_GET['activeTabName'])) {
+            $this->activeTabName = $_GET['activeTabName'];
         }
     }
 
@@ -112,16 +136,48 @@ class ProfileController extends Controller {
     }
 
     public function updateProfile() {
-        $userModel = new UserModel();
 
         $this->usernameError = "";
         $this->successMessage = "";
         $this->errorMessage = "";
+        $this->oldPasswordError = "";
+        $this->passwordError = "";
+        $this->repeatPasswordError = "";
+
+        $success = true;
+        $activeTabName = $this->activeTabName;
 
         $user = $this->getUser();
         if($user == null) {
             header("Location: login.php", true);
         }
+
+        if($success) {
+            if(isset($_POST['save-details'])) {
+                $success = $this->updateDetails();
+                $activeTabName = "details";
+            } elseif(isset($_POST['change-password'])) {
+                $success = $this->updatePassword();
+                $activeTabName = "password";
+            }
+        }
+
+        $username = urlencode($this->username);
+        $bio = urlencode($this->bio);
+        $usernameError = urlencode($this->usernameError);
+        $oldPasswordError = urlencode($this->oldPasswordError);
+        $passwordError = urlencode($this->passwordError);
+        $repeatPasswordError = urlencode($this->repeatPasswordError);
+        $errorMessage = urlencode($this->errorMessage);
+        $successMessage = urlencode($this->successMessage);
+        $location = "edit-profile.php?username={$username}&bio={$bio}&usernameError={$usernameError}&oldPasswordError={$oldPasswordError}&passwordError={$passwordError}&repeatPasswordError={$repeatPasswordError}&errorMessage={$errorMessage}&successMessage={$successMessage}&activeTabName={$activeTabName}";
+        header("Location: {$location}", true);
+    }
+
+    public function updateDetails() {
+        $userModel = new UserModel();
+
+        $user = $this->getUser();
 
         $this->username = $_POST['username'];
         $this->bio = $_POST['bio'];
@@ -154,19 +210,66 @@ class ProfileController extends Controller {
             AuthContext::logIn($userModel->getById($user->getId()));
 
             $this->successMessage = 'User details saved successfully!';
-
-            $successMessage = urlencode($this->successMessage);
-            header("Location: edit-profile.php?successMessage={$successMessage}", true);
         } else {
             $this->errorMessage = 'User details failed to save!';
-
-            $username = urlencode($this->username);
-            $bio = urlencode($this->bio);
-            $usernameError = urlencode($this->usernameError);
-            $errorMessage = urlencode($this->errorMessage);
-            header("Location: edit-profile.php?username={$username}&bio={$bio}&usernameError={$usernameError}&errorMessage={$errorMessage}", true);
         }
+
+        return $success;
         
+    }
+
+    public function updatePassword() {
+        $userModel = new UserModel();
+
+        $user = $this->getUser();
+
+        $success = true;
+
+        $oldPassword = $_POST['old-password'];
+        $password = $_POST['password'];
+        $repeatPassword = $_POST['repeat-password'];
+
+        if(empty($_POST['old-password'])) {
+            $this->oldPasswordError = 'Field is reuqired';
+            $success = false;
+        }
+
+        if(empty($_POST['password'])) {
+            $this->passwordError = 'Field is reuqired';
+            $success = false;
+        } else {
+            $passwordLength = strlen($password);
+
+            if($passwordLength < 8) {
+                $this->passwordError = 'Password must have at least 8 characters';
+                $success = false;
+            }
+        }
+
+        if(empty($_POST['repeat-password'])) {
+            $this->repeatPasswordError = 'Field is reuqired';
+            $success = false;
+        } else {
+            if($password != $repeatPassword) {
+                $this->repeatPasswordError = 'Passwords does not match';
+                $success = false;
+            }
+        }
+
+        if($success) {
+            $existingUser = $userModel->getById($user->getId());
+
+            if($existingUser == null || !password_verify($oldPassword, $existingUser['password'])) {
+                $this->oldPasswordError = 'Password is not correct';
+                $success = false;
+                $this->errorMessage = "Password failed to change!";
+            } else {
+                $userModel->updatePassword($user->getId(), $password);
+                $this->successMessage = "Password changed successfully!";
+            }
+        }
+
+        return $success;
     }
 
     public function profileView(): string {
@@ -218,6 +321,22 @@ class ProfileController extends Controller {
     }
 
     public function getLastPage() {
-        return (int)($this->gameCount / $this->countPerPage) + 1;
+        return (int)(max($this->gameCount - 1, 0) / $this->countPerPage) + 1;
     }
+
+    public function getActiveTabName() {
+        return $this->activeTabName;
+    }
+
+    public function getPasswordError() {
+        return $this->passwordError;
+    }
+
+    public function getRepeatPasswordError() {
+        return $this->repeatPasswordError;
+    }
+
+    public function getOldPasswordError() {
+        return $this->oldPasswordError;
+    } 
 }

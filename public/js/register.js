@@ -3,13 +3,16 @@
     const username = document.getElementById("username");
     const password = document.getElementById("password");
     const repeatPassword = document.getElementById("repeat-password");
-    const usernameErr = document.getElementById("username-error");
-    const passwordErr = document.getElementById("password-error");
-    const repeatPasswordErr = document.getElementById("repeat-password-error");
 
-    registerForm.addEventListener("submit", checkForm);
+    if (registerForm) {
+        registerForm.addEventListener("submit", checkForm);
+    }
 
     function checkForm(e) {
+        const usernameErr = username.parentElement.querySelector(".form-control-error");
+        const passwordErr = password.parentElement.querySelector(".form-control-error");
+        const repeatPasswordErr = repeatPassword.parentElement.querySelector(".form-control-error");
+
         usernameErr.textContent = '';
         passwordErr.textContent = '';
         repeatPasswordErr.textContent = '';

@@ -9,9 +9,10 @@ $controller = new ProfileController();
 
 Middleware::protectedRoute();
 
+$controller->loadUserDetails($controller->getUser()->getId());
+
 switch($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $controller->loadUserDetails($controller->getUser()->getId());
         $controller->loadParams();
         break;
     case 'POST':
