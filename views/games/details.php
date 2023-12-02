@@ -1,3 +1,8 @@
+<?php
+$comments = $controller->getComments();
+$currentPage = $controller->getCurrentPage();
+$lastPage = (int)(max($controller->getCommentCount() - 1, 0) / $controller->getCommentsPerPage()) + 1;
+?>
 <span class="brand">Games</span>
 
 <div class="game-details-container">
@@ -16,9 +21,11 @@
         <div class="game-details__description"><?= htmlspecialchars($controller->getDescription(), ENT_QUOTES) ?></div>
         <div class="game-details-btn-wrapper">
             <a href="<?= 'uploads/games/' . $controller->getGameId() . '/dist/index.html' ?>" target="_blank" class="btn game-details-btn">Play</a>
+            <?php if($controller->getUser() != null): ?>
             <button class="btn game-details-btn" id="toggle-star-btn">
                 <?= $controller->isStarred() ? 'Unstar' : 'Star' ?>
             </button>
+            <?php endif; ?>
             <?php if($controller->getUserId() == $controller->getUser()?->getId()): ?>
                 <a class="btn game-details-btn" href="<?= 'edit-game.php?id=' . $controller->getGameId() ?>">Edit</a>
             <?php endif; ?>
@@ -56,10 +63,54 @@
             <a href="<?= 'uploads/games/' . $controller->getGameId() . '/dist/index.html' ?>"
             download="<?= htmlspecialchars($controller->getTitle(), ENT_QUOTES) . '.html' ?>">Download source</a>
         </div>
+        <h2>Comments</h2>
+        <div>
+            <?php if($controller->getUser() != null): ?>
+            <form method="POST" class="form" action="<?= 'create-comment.php?gameId=' . $controller->getGameId() ?>">
+                <div class="form-group">
+                    <label for="message">Write comment</label>
+                    <div class="form-control">
+                        <textarea name="message" id="message" rows="4" cols="48" maxlength="1000" required></textarea>
+                    </div>
+                </div>
+                <div>
+                    <button name="create-comment" type="submit" class="btn">Post</button>
+                </div>
+            </form>
+            <?php endif; ?>
+            <ul class="comment-list">
+            <?php if($controller->getCommentCount() > 0): ?>
+                <?php foreach($comments as $comment): ?>
+                <li class="comment">
+                    <div class="comment__header">
+                        <a class="comment__author" href="<?= 'profile.php?id=' . $comment['user_id'] ?>">
+                            <?= htmlspecialchars($comment['username'], ENT_QUOTES) ?>
+                        </a>
+                        <span class="comment__date">
+                            <?= date("m/d/Y", strtotime($comment['created_at'])) ?>
+                        </span>
+                    </div>
+                    <div class="comment__body">
+                        <div class="comment__message"><?= htmlspecialchars($comment['message'], ENT_QUOTES) ?></div>
+                    </div>
+                    <div>
+                        <?php if($comment['user_id'] == $controller->getUser()?->getId() || $controller->getUserId() == $controller->getUser()?->getId()): ?>
+                        <a class="delete-comment-btn" data-game-id="<?= $controller->getGameId() ?>" data-comment-id="<?= $comment['id'] ?>" href="#">Delete</a>
+                        <?php endif; ?>
+                    </div>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+            <div class="pagination-wrapper">
+                <?php include(VIEW_PATH . '/partials/pagination.php'); ?>
+            </div>
+            <?php else: ?>
+            <p>No comments yet</p>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 <?php else: ?>
 <h2>404 Game not found</h2>
 <?php endif; ?>
 </div>
-<script src="js/game-stars.js"></script>

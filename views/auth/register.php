@@ -1,10 +1,20 @@
-<h2>Register</h2>
+<div class="register-wrapper">
+    <div class="register-container">
+        <h2>Register</h2>
+        <form id="register-form" method="POST">
+
+        </form>
+    </div>
+<div>
+<script src="js/register.js"></script>
+
+
 <form id="register-form" method="POST">
-    <label for="username">Username</label>
-    <input id="username" name="username" type="text"
-        value="<?= htmlspecialchars($controller->getUsername(), ENT_QUOTES) ?>" required />
-    <span class="text-warn">* </span>
-    <span id="username-error" class="text-error">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text"
+                value="<?= htmlspecialchars($controller->getUsername(), ENT_QUOTES) ?>" required />
+            <span class="text-warn">* </span>
+        <span id="username-error" class="text-error">
         <?= htmlspecialchars($controller->getUsernameError(), ENT_QUOTES) ?>
     </span>
     <br />
@@ -24,4 +34,3 @@
     <br />
     <button type="submit" class="btn">Register</button>
 </form>
-<script src="js/register.js"></script>

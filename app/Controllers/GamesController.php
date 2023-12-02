@@ -7,6 +7,7 @@ use App\View;
 use App\Models\GameModel;
 use App\Models\GameGenreModel;
 use App\Models\GameStarModel;
+use App\Models\GameCommentModel;
 use App\Utils;
 
 class GamesController extends Controller {
@@ -27,9 +28,9 @@ class GamesController extends Controller {
 
     private array $gameGenres = [];
 
-    const MAX_COVER_IMAGE_SIZE = 50000;
+    const MAX_COVER_IMAGE_SIZE = 150000;
 
-    const COVER_IMAGE_FILE_TYPES = ["jpg", "jpeg", "gif"];
+    const COVER_IMAGE_FILE_TYPES = ["jpg", "jpeg", "gif", "png"];
 
     const MAX_UPLOADS_SIZE = 5000000;
 
@@ -68,6 +69,14 @@ class GamesController extends Controller {
 
     private bool $starred;
 
+    private string $activeTabName;
+
+    private array $comments = [];
+
+    private int $commentCount = 0;
+
+    private int $commentsPerPage = 10;
+
     public function __construct() {
 
         $this->search = $_GET['search'] ?? "";
@@ -89,6 +98,7 @@ class GamesController extends Controller {
         $this->errorMessage = "";
         $this->starCount = 0;
         $this->starred = false;
+        $this->activeTabName = "details";
     }
 
     public function loadGames() {
@@ -97,6 +107,14 @@ class GamesController extends Controller {
         $result = $gameModel->getByParams($this->search, $this->page, $this->countPerPage, $this->filter, $this->genre, $this->getUser()?->getId() ?? 0);
         $this->games = $result['data'];
         $this->gameCount = $result['count'];
+    }
+
+    public function loadComments($gameId) {
+        $gameCommentModel = new GameCommentModel();
+
+        $result = $gameCommentModel->getByParams($this->page, $this->commentsPerPage, $gameId);
+        $this->comments = $result['data'];
+        $this->commentCount = $result['count'];
     }
 
     public function loadGameGenres() {
@@ -147,10 +165,10 @@ class GamesController extends Controller {
                     $this->coverImageError = 'File is not an image';
                     $success = false;
                 } elseif(!in_array($coverImageFileType, self::COVER_IMAGE_FILE_TYPES)) {
-                    $this->coverImageError = 'Only JPG, JPEG & GIF files allowed';
+                    $this->coverImageError = 'Only JPG, JPEG, PNG & GIF files allowed';
                     $success = false;
                 } elseif($fileCoverImage['size'] > self::MAX_COVER_IMAGE_SIZE) {
-                    $this->coverImageError = 'Image size exceeds limit of 30KB';
+                    $this->coverImageError = 'Image size exceeds limit of 150KB';
                     $success = false;
                 }
             }
@@ -216,9 +234,34 @@ class GamesController extends Controller {
             $coverImageError = urlencode($this->coverImageError);
             $errorMessage = urlencode($this->errorMessage);
             $successMessage = urlencode($this->successMessage);
-            $location = "edit-game.php?id={$gameId}&title={$title}&description={$description}&genreId={$this->genreId}&titleError={$titleError}&uploadsError={$uploadsError}&coverImageError={$coverImageError}&errorMessage={$errorMessage}&successMessage={$successMessage}";
+            $location = "upload-game.php?title={$title}&description={$description}&genreId={$this->genreId}&titleError={$titleError}&uploadsError={$uploadsError}&coverImageError={$coverImageError}&errorMessage={$errorMessage}&successMessage={$successMessage}";
             header("Location: {$location}", true);
         }
+
+    }
+
+    public function createComment($gameId) {
+        $gameCommentModel = new GameCommentModel();
+
+        $success = true;
+
+        $user = $this->getUser();
+        if($user == null) {
+            $success = false;
+        }
+
+        if($success) {
+            $this->message = $_POST['message'];
+            if(empty($_POST['message'])) {
+                $success = false;
+            }
+
+            if($success) {
+                $gameCommentModel->create($user->getId(), $gameId, $this->message);
+            }
+        }
+
+        header("Location: game-details.php?id={$gameId}", true);
 
     }
 
@@ -273,6 +316,9 @@ class GamesController extends Controller {
         if(isset($_GET['errorMessage'])) {
             $this->errorMessage = urldecode($_GET['errorMessage']);
         }
+        if(isset($_GET['activeTabName'])) {
+            $this->activeTabName = $_GET['activeTabName'];
+        }
     }
 
     public function deleteGame(int $gameId) {
@@ -301,6 +347,36 @@ class GamesController extends Controller {
         
     }
 
+    public function deleteComment(int $commentId, int $gameId) {
+
+        $gameCommentModel = new GameCommentModel();
+        $gameModel = new GameModel();
+
+        $success = true;
+
+        $comment = $gameCommentModel->getById($commentId);
+        if($comment == null) {
+            $success = false;
+        }
+
+        $game = $gameModel->getById($gameId);
+        if($game == null) {
+            $success = false;
+        }
+
+        $user = $this->getUser();
+        if($user == null || ($user->getId() != $comment['user_id'] && $user->getId() != $game['user_id'])) {
+            $success = false;
+        }
+
+        if($success) {
+            $gameCommentModel->delete($commentId);
+        }
+
+        header("Location: game-details.php?id={$gameId}", true);
+        
+    }
+
     public function updateGame(int $gameId) {
 
         $this->titleError = "";
@@ -310,6 +386,7 @@ class GamesController extends Controller {
         $this->errorMessage = "";
 
         $success = true;
+        $activeTabName = $this->activeTabName;
 
         $user = $this->getUser();
         if($user == null || $user->getId() != $this->userId) {
@@ -320,10 +397,13 @@ class GamesController extends Controller {
         if($success) {
             if(isset($_POST['save-details'])) {
                 $success = $this->updateDetails($gameId);
+                $activeTabName = "details";
             } elseif(isset($_POST['update-cover-image'])) {
                 $success = $this->updateCoverImage($gameId);
+                $activeTabName = "cover-image";
             } elseif(isset($_POST['update-uploads'])) {
                 $success = $this->updateUploads($gameId);
+                $activeTabName = "uploads";
             }
         }
 
@@ -334,7 +414,7 @@ class GamesController extends Controller {
         $coverImageError = urlencode($this->coverImageError);
         $errorMessage = urlencode($this->errorMessage);
         $successMessage = urlencode($this->successMessage);
-        $location = "edit-game.php?id={$gameId}&title={$title}&description={$description}&genreId={$this->genreId}&titleError={$titleError}&uploadsError={$uploadsError}&coverImageError={$coverImageError}&errorMessage={$errorMessage}&successMessage={$successMessage}";
+        $location = "edit-game.php?id={$gameId}&title={$title}&description={$description}&genreId={$this->genreId}&titleError={$titleError}&uploadsError={$uploadsError}&coverImageError={$coverImageError}&errorMessage={$errorMessage}&successMessage={$successMessage}&activeTabName={$activeTabName}";
         header("Location: {$location}", true);
     }
 
@@ -379,10 +459,10 @@ class GamesController extends Controller {
                 $this->coverImageError = 'File is not an image';
                 $success = false;
             } elseif(!in_array($coverImageFileType, self::COVER_IMAGE_FILE_TYPES)) {
-                $this->coverImageError = 'Only JPG, JPEG & GIF files allowed';
+                $this->coverImageError = 'Only JPG, JPEG, PNG & GIF files allowed';
                 $success = false;
             } elseif($fileCoverImage['size'] > self::MAX_COVER_IMAGE_SIZE) {
-                $this->coverImageError = 'Image size exceeds limit of 30KB';
+                $this->coverImageError = 'Image size exceeds limit of 150KB';
                 $success = false;
             }
         }
@@ -556,7 +636,7 @@ class GamesController extends Controller {
     }
 
     public function getLastPage() {
-        return (int)($this->gameCount / $this->countPerPage) + 1;
+        return (int)(max($this->gameCount - 1, 0) / $this->countPerPage) + 1;
     }
 
     public function getTitle() {
@@ -621,5 +701,21 @@ class GamesController extends Controller {
 
     public function isStarred() {
         return $this->starred;
+    }
+
+    public function getActiveTabName() {
+        return $this->activeTabName;
+    }
+
+    public function getComments() {
+        return $this->comments;
+    }
+
+    public function getCommentCount() {
+        return $this->commentCount;
+    }
+
+    public function getCommentsPerPage() {
+        return $this->commentsPerPage;
     }
 }

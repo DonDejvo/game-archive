@@ -1,4 +1,4 @@
-<div style="margin-top: 1.5rem;">
+<div>
 <?php if(count($games) > 0): ?>
     <div class="games-grid">
         <?php foreach($games as $game): ?>
@@ -39,5 +39,3 @@
         </div>
     <?php endif; ?>
 </div>
-<script src="js/game-list.js"></script>
-<script src="js/pagination.js"></script>

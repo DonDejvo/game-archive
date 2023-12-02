@@ -1,13 +1,19 @@
 <span class="brand">Games</span>
 <h1 class="title">Game List</h1>
 
+<div class="games-upload-btn-wrapper">
+    <a class="btn" href="upload-game.php">Upload game</a>
+</div>
+
 <form method="GET" class="games-filter-widget">
-    <div class="form-group">
+    <div class="games-filter-widget-group">
         <label for="search"></label>
-        <input id="search" class="form-control" name="search" type="search" value="<?= htmlspecialchars($controller->getSearch(), ENT_QUOTES) ?>" placeholder="Search by title">
+        <div class="form-control">
+            <input id="search"  name="search" type="search" value="<?= htmlspecialchars($controller->getSearch(), ENT_QUOTES) ?>" placeholder="Search by title">
+        </div>
         <button type="button" id="search-btn" class="btn">Search</button>
     </div>
-    <div class="form-group">
+    <div class="games-filter-widget-group">
         <label for="filter">Filter</label>
         <div class="custom-select">
         <select id="filter" name="filter">
@@ -29,7 +35,7 @@
         </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="games-filter-widget-group">
     <label for="genre">Genre</label>
     <div class="custom-select">
     <select id="genre" name="genre">

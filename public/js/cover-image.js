@@ -3,13 +3,15 @@
     const coverImage = document.querySelector(".cover-image-container__image");
     const resetImageBtn = document.getElementById("reset-image-btn");
 
-    coverImageInput.addEventListener("change", readFileToImage);
-    if (resetImageBtn) {
-        resetImageBtn.addEventListener("click", resetImage);
-    }
+    if (coverImage != null) {
+        coverImageInput.addEventListener("change", readFileToImage);
+        if (resetImageBtn) {
+            resetImageBtn.addEventListener("click", resetImage);
+        }
 
-    if (coverImage.dataset.url) {
-        resetImage();
+        if (coverImage.dataset.url) {
+            resetImage();
+        }
     }
 
     function readFileToImage() {

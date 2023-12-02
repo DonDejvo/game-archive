@@ -23,6 +23,14 @@
             </main>
         </div>
     </div>
+    <script src="js/sidebar.js"></script>
     <script src="js/custom-select.js"></script>
+    <script src="js/cover-image.js"></script>
+    <script src="js/form-control.js"></script>
+    <script src="js/tabs.js"></script>
+    <script src="js/pagination.js"></script>
+    <script src="js/game-stars.js"></script>
+    <script src="js/comments.js"></script>
+    <script src="js/delete-game.js"></script>
 </body>
 </html>

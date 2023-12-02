@@ -39,7 +39,7 @@ class GameModel extends Model {
 
         $stmtCount = $this->db->prepare($query);
         $stmtCount->execute($params);
-        $count = $stmtCount->rowCount();
+        $total = $stmtCount->rowCount();
 
         $offset = ($page - 1) * $count;
         $query .= " LIMIT {$count} OFFSET {$offset}";
@@ -49,7 +49,7 @@ class GameModel extends Model {
         $stmt->execute($params);
         $data = $stmt->fetchAll();
 
-        return [ 'data' => $data, 'count' => $count ];
+        return [ 'data' => $data, 'count' => $total ];
     }
 
     public function update(int $id, string $title, string $description, int $genreId, string $coverImageUrl) {

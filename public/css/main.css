@@ -13,6 +13,7 @@
 }
 
 .btn {
+    font-size: .9rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +30,7 @@
     line-height: 1.5;
     color: var(--element-primary);
     border-color: var(--element-primary);
-    border-radius: 9999px;
+    border-radius: .25rem;
     cursor: pointer;
 }
 
@@ -43,14 +44,27 @@
 }
 
 
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+}
+
 .form-group {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     gap: .5rem;
 }
 
 .form-control {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control>input,
+.form-control>textarea {
+    width: 100%;
     display: inline-flex;
     padding-top: .5rem;
     padding-bottom: .5rem;
@@ -60,15 +74,29 @@
     border-width: 2px;
     border-style: solid;
     font-family: system-ui;
-    border-radius: 9999px;
+    border-radius: .25rem;
     color: #d9dbdf;
     border-color: #d9dbdf;
     outline: none;
 }
 
-.form-control:focus {
-    border-color: dodgerblue;
+.form-control-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .25rem;
+    font-size: .75rem;
 }
+
+.form-control-error {
+    color: red;
+}
+
+.form-control-required {
+    color: orange;
+}
+
+
+/* Custom select */
 
 .custom-select {
     position: relative;
@@ -137,6 +165,55 @@
 .same-as-selected {
     color: #000;
     background-color: #a4a0fb;
+}
+
+
+/* Tabs */
+
+.tabs {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.tabs__menu {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-menu-item {
+    width: 100%;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    border-radius: .25rem;
+    user-select: none;
+    cursor: pointer;
+}
+
+.tabs-menu-item:hover,
+.tabs-menu-item--active {
+    color: #000;
+    background-color: #a4a0fb;
+}
+
+.tabs-panel--closed {
+    display: none;
+}
+
+@media (min-width: 512px) {
+    .tabs {
+        flex-direction: row;
+    }
+
+    .tabs__menu {
+        width: 180px;
+    }
 }
 
 .brand {
@@ -270,12 +347,6 @@ header {
     inset: 0;
 }
 
-@media (min-width: 1024px) {
-    .sidebar {
-        left: max(0px, calc(50% - 45rem)) !important;
-    }
-}
-
 .sidebar-responsive-open {
     left: max(0px, calc(50% - 45rem)) !important;
 }
@@ -305,7 +376,7 @@ header {
     padding-bottom: .5rem;
     padding-left: .75rem;
     padding-right: .75rem;
-    border-radius: 9999px;
+    border-radius: .25rem;
     text-decoration: inherit;
     color: #d9dbdf;
     border: 1px solid transparent;
@@ -346,6 +417,16 @@ header {
     display: block;
 }
 
+@media (min-width: 1024px) {
+    .sidebar {
+        left: max(0px, calc(50% - 45rem)) !important;
+    }
+
+    .lightbox-open {
+        display: none;
+    }
+}
+
 
 /* profile */
 
@@ -364,6 +445,12 @@ header {
     flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
+}
+
+.games-filter-widget-group {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
 }
 
 .games-grid {
@@ -548,6 +635,19 @@ header {
     color: gold;
 }
 
+.edit-game-back-btn-wrapper {
+    display: flex;
+    margin: 1.25rem 0;
+}
+
+.games-upload-btn-wrapper {
+    display: flex;
+    margin: 1.25rem 0;
+}
+
+.games-upload-btn-wrapper>a {
+    text-decoration: none;
+}
 
 /* pagination */
 
@@ -603,11 +703,54 @@ header {
 /* cover image */
 
 .cover-image-container {
-    width: 128px;
-    height: 128px;
+    width: 300px;
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
 }
 
 .cover-image-container__image {
     width: 100%;
     height: 100%;
+}
+
+/* comments */
+
+.comment-list {
+    margin: 1rem 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.comment__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment__author {
+    color: #d9dbdf;
+    font-weight: 400;
+}
+
+.comment__date {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.comment__body {
+    padding-left: .5rem;
+}
+
+.comment__message {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.3;
 }

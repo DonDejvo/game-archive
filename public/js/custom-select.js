@@ -36,7 +36,6 @@
                 selectedItemElem.click();
 
                 defaultSelect.value = defaultSelect.options[defaultSelect.selectedIndex].value;
-                console.log(defaultSelect.value);
                 defaultSelect.dispatchEvent(new Event("change"));
             });
         }

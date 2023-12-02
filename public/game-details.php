@@ -12,6 +12,7 @@ $gameId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 switch($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $controller->loadGameDetails($gameId);
+        $controller->loadComments($gameId);
         break;
 }
 
