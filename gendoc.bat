@@ -1,0 +1,1 @@
+C:\xampp\php\php.exe C:\xampp\php\phpDocumentor.phar run -d . -t docs

@@ -2,9 +2,17 @@
 
 namespace App;
 
+/**
+ * Statická třída rozšiřující PHP funkce pro použití v aplikaci
+ */
 class Utils {
 
-    public static function rrmdir($dir) { 
+    /**
+     * Rekurzivně smaže obsah složky
+     * 
+     * @param string $dir   Cesta ke složce pro smazání
+     */
+    public static function rrmdir(string $dir) { 
         if (is_dir($dir)) { 
             $objects = scandir($dir);
             foreach ($objects as $object) { 

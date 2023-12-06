@@ -4,6 +4,10 @@ namespace App;
 
 use App\Exceptions\ViewNotFoundException;
 
+
+/**
+ * Třída pro vytvoření obsahu stránky 
+ */
 class View {
 
     public function __construct(
@@ -21,6 +25,9 @@ class View {
         return new static($view, $controller);
     }
 
+    /**
+     * Vytvoří obsah pomocí templatu
+     */
     public function render(): string {
         
         $viewPath = VIEW_PATH . '/' . $this->view . '.php';

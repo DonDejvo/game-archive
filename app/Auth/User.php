@@ -2,6 +2,9 @@
 
 namespace App\Auth;
 
+/**
+ * Třída obsahující data uživatele nutná pro autorizaci
+ */
 class User {
 
     public function __construct(

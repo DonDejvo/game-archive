@@ -2,6 +2,9 @@
 
 namespace App\Auth;
 
+/**
+ * Třída s jedinou instancí přes celou aplikaci, která uchovává informace o přihlášeném uživateli pro přístup odkudkoli
+ */
 class AuthContext {
 
     const SESSION_AUTH = "user";
@@ -24,13 +27,21 @@ class AuthContext {
         }
     }
     
+    /**
+     * Zjistí, je-li nastaven uživatel
+     */
     public static function isLogged(): bool {
 
         $instance = self::getInstance();
 
         return $instance->user != null && $instance->user->isActive();
     }
-    
+
+    /**
+     * Nastaví informace o uživateli
+     * 
+     * @param array $data   Data uživatele z databáze
+     */
     public static function logIn (array $data): bool {
 
         $instance = self::getInstance();
@@ -49,10 +60,16 @@ class AuthContext {
         return $instance->user->isActive();
     }
     
+    /**
+     * Vrátí informace o uživateli
+     */
     public static function getUser(): ?User {
         return self::getInstance()->user;
     }
     
+    /**
+     * Vynuluje informace o uživateli
+     */
     public static function logOut() {
         self::getInstance()->user = null;
         unset($_SESSION[self::SESSION_AUTH]);

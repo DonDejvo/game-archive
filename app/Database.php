@@ -5,6 +5,10 @@ namespace App;
 use PDO;
 use App\Dotenv;
 
+/**
+ * Třída s jedinou instancí pokytující interface pro práci s databází v aplikaci
+ */
+
 class Database {
 
     private static ?Database $instance = null;
