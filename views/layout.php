@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/print.css" media="print" />
 </head>
 <body>
     <?php include(VIEW_PATH . '/partials/header.php'); ?>

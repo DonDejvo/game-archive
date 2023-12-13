@@ -1,5 +1,3 @@
-/* main */
-
 .text-error {
     color: red;
 }
@@ -216,6 +214,9 @@
         width: 180px;
     }
 }
+
+
+/* main */
 
 .brand {
     color: var(--text-primary);
