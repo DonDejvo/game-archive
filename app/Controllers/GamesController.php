@@ -10,6 +10,9 @@ use App\Models\GameStarModel;
 use App\Models\GameCommentModel;
 use App\Utils;
 
+/**
+ * Kontroler pro práci s hrami
+ */
 class GamesController extends Controller {
 
     private int $countPerPage = 6;
@@ -101,6 +104,9 @@ class GamesController extends Controller {
         $this->activeTabName = "details";
     }
 
+    /**
+     * Načte hry
+     */
     public function loadGames() {
         $gameModel = new GameModel();
 
@@ -123,6 +129,9 @@ class GamesController extends Controller {
         $this->gameGenres = $gameGenreModel->getAll();
     }
 
+    /**
+     * Nahraje novou hru
+     */
     public function uploadGame() {
 
         $gameModel = new GameModel();
@@ -240,7 +249,12 @@ class GamesController extends Controller {
 
     }
 
-    public function createComment($gameId) {
+    /**
+     * Vytvoří komentář
+     * 
+     * @param int $gameId   ID hry
+     */
+    public function createComment(int $gameId) {
         $gameCommentModel = new GameCommentModel();
 
         $success = true;
@@ -265,6 +279,11 @@ class GamesController extends Controller {
 
     }
 
+    /**
+     * Načte detaily hry
+     * 
+     * @param int $gameId   ID hry
+     */
     public function loadGameDetails(int $gameId) {
         $gameModel = new GameModel();
         $gameStarModel = new GameStarModel();
@@ -291,6 +310,9 @@ class GamesController extends Controller {
         }
     }
 
+    /**
+     * Načte URL parametry
+     */
     public function loadParams() {
         if(isset($_GET['title'])) {
             $this->title = urldecode($_GET['title']);
@@ -321,6 +343,11 @@ class GamesController extends Controller {
         }
     }
 
+    /**
+     * Smaže hru
+     * 
+     * @param int $gameId   ID hry
+     */
     public function deleteGame(int $gameId) {
 
         $gameModel = new GameModel();
@@ -347,6 +374,12 @@ class GamesController extends Controller {
         
     }
 
+    /**
+     * Smaže kometář
+     * 
+     * @param int $commentId    ID kometáře
+     * @param int $gameId       ID hry
+     */
     public function deleteComment(int $commentId, int $gameId) {
 
         $gameCommentModel = new GameCommentModel();
@@ -377,6 +410,11 @@ class GamesController extends Controller {
         
     }
 
+    /**
+     * Upraví a uloží hru
+     * 
+     * @param int $gameId   ID hry
+     */
     public function updateGame(int $gameId) {
 
         $this->titleError = "";
@@ -418,7 +456,12 @@ class GamesController extends Controller {
         header("Location: {$location}", true);
     }
 
-    public function updateDetails(int $gameId) {
+    /**
+     * Upraví a uloží detaily hry
+     * 
+     * @param int $gameId   ID hry
+     */
+    private function updateDetails(int $gameId) {
         $gameModel = new GameModel();
         $success = true;
 
@@ -441,7 +484,12 @@ class GamesController extends Controller {
         return $success;
     }
 
-    public function updateCoverImage(int $gameId) {
+    /**
+     * Upraví a uloží titulní obrázek hry
+     * 
+     * @param int $gameId   ID hry
+     */
+    private function updateCoverImage(int $gameId) {
         $gameModel = new GameModel();
         $success = true;
 
@@ -497,7 +545,12 @@ class GamesController extends Controller {
         return $success;
     }
 
-    public function updateUploads(int $gameId) {
+    /**
+     * Přenahraje soubory hry
+     * 
+     * @param int $gameId   ID hry
+     */
+    private function updateUploads(int $gameId) {
         $fileUploads = $_FILES['uploads'];
         $success = true;
 
@@ -542,6 +595,9 @@ class GamesController extends Controller {
         return $success;
     }
 
+    /**
+     * Přidá / odebere hvězdičku
+     */
     public function toggleStar() {
         $gameStarModel = new GameStarModel();
 
@@ -575,22 +631,37 @@ class GamesController extends Controller {
         echo json_encode($result);
     }
 
+    /**
+     * Vytvoří a vrátí view pro přehled her
+     */
     public function gamesView(): string {
         return View::make('games/index', $this);
     }
 
+    /**
+     * Vytvoří a vrátí view pro nahrání hry
+     */
     public function uploadGameView(): string {
         return View::make('games/upload', $this);
     }
 
+    /**
+     * Vytvoří a vrátí view pro detail hry
+     */
     public function gameDetailsView(): string {
         return View::make('games/details', $this);
     }
 
+    /**
+     * Vytvoří a vrátí view pro upravování hry
+     */
     public function editGameView(): string {
         return View::make('games/edit', $this);
     }
 
+    /**
+     * Vytvoří a vrátí view pro smazání hry
+     */
     public function deleteGameView(): string {
         return View::make('games/delete', $this);
     }

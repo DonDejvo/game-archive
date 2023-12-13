@@ -8,6 +8,9 @@ use App\Models\UserModel;
 use App\Auth\AuthContext;
 use App\Models\GameModel;
 
+/**
+ * Kontroler pro práci s uživatelským profilem
+ */
 class ProfileController extends Controller {
 
     private ?int $userId;
@@ -59,6 +62,9 @@ class ProfileController extends Controller {
         $this->repeatPasswordError = "";
     }
 
+    /**
+     * Načte detaily uživatele
+     */
     public function loadUserDetails($userId) {
         $userModel = new UserModel();
 
@@ -72,6 +78,9 @@ class ProfileController extends Controller {
         }
     }
 
+    /**
+     * Načte URL parametry
+     */
     public function loadParams() {
         if(isset($_GET['username'])) {
             $this->username = urldecode($_GET['username']);
@@ -102,6 +111,9 @@ class ProfileController extends Controller {
         }
     }
 
+    /**
+     * Načte hry uživatele
+     */
     public function loadGames() {
         $gameModel = new GameModel();
 
@@ -114,6 +126,9 @@ class ProfileController extends Controller {
         $this->gameCount = $result['count'];
     }
 
+    /**
+     * Načte profil
+     */
     public function loadProfile() {
 
         if(empty($_GET['id'])) {
@@ -135,6 +150,9 @@ class ProfileController extends Controller {
         $this->loadUserDetails($userId);
     }
 
+    /**
+     * Upraví a uloží uživatelský profil
+     */
     public function updateProfile() {
 
         $this->usernameError = "";
@@ -174,7 +192,10 @@ class ProfileController extends Controller {
         header("Location: {$location}", true);
     }
 
-    public function updateDetails() {
+    /**
+     * Upraví a uloží detaily uživatele
+     */
+    private function updateDetails() {
         $userModel = new UserModel();
 
         $user = $this->getUser();
@@ -218,7 +239,10 @@ class ProfileController extends Controller {
         
     }
 
-    public function updatePassword() {
+    /**
+     * Změní heslo
+     */
+    private function updatePassword() {
         $userModel = new UserModel();
 
         $user = $this->getUser();
@@ -272,10 +296,16 @@ class ProfileController extends Controller {
         return $success;
     }
 
+    /**
+     * Vytvoří a vrátí view pro uživatelský profil
+     */
     public function profileView(): string {
         return View::make("profile/index", $this);
     }
 
+    /**
+     * Vytvoří a vrátí view pro upravování profilu
+     */
     public function editProfileView(): string {
         return View::make("profile/edit", $this);
     }

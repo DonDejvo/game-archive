@@ -7,6 +7,9 @@ use App\View;
 use App\Models\UserModel;
 use App\Auth\AuthContext;
 
+/**
+ * Kontroler pro autentizaci
+ */
 class AuthController extends Controller {
 
     private string $username;
@@ -30,6 +33,9 @@ class AuthController extends Controller {
         $this->repeatPassword = "";
     }
 
+    /**
+     * Zaregistruje nového uživatele
+     */
     public function register() {
 
         $userModel = new UserModel();
@@ -108,6 +114,9 @@ class AuthController extends Controller {
         }
     }
 
+    /**
+     * Přihlásí uživatele
+     */
     public function login() {
 
         $userModel = new UserModel();
@@ -154,6 +163,9 @@ class AuthController extends Controller {
         }
     }
 
+    /**
+     * Odhlásí uživatele
+     */
     public function logout() {
 
         AuthContext::logOut();
@@ -161,10 +173,16 @@ class AuthController extends Controller {
         header("Location: login.php", true);
     }
 
+    /**
+     * Vytvoří a vrátí view pro registraci
+     */
     public function registerView() {
         return View::make("auth/register", $this);
     }
 
+    /**
+     * Vytvoří a vrátí view pro přihlášení
+     */
     public function loginView() {
         return View::make("auth/login", $this);
     }

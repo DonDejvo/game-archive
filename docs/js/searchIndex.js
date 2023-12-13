@@ -103,7 +103,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controllers\\AuthController",
             "name": "AuthController",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020kontrolery",
+            "summary": "Kontroler\u0020pro\u0020autentizaci",
             "url": "classes/App-Controllers-AuthController.html"
         },                {
             "fqsen": "\\App\\Controllers\\AuthController\u003A\u003A__construct\u0028\u0029",
@@ -113,27 +113,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controllers\\AuthController\u003A\u003Aregister\u0028\u0029",
             "name": "register",
-            "summary": "",
+            "summary": "Zaregistruje\u0020nov\u00E9ho\u0020u\u017Eivatele",
             "url": "classes/App-Controllers-AuthController.html#method_register"
         },                {
             "fqsen": "\\App\\Controllers\\AuthController\u003A\u003Alogin\u0028\u0029",
             "name": "login",
-            "summary": "",
+            "summary": "P\u0159ihl\u00E1s\u00ED\u0020u\u017Eivatele",
             "url": "classes/App-Controllers-AuthController.html#method_login"
         },                {
             "fqsen": "\\App\\Controllers\\AuthController\u003A\u003Alogout\u0028\u0029",
             "name": "logout",
-            "summary": "",
+            "summary": "Odhl\u00E1s\u00ED\u0020u\u017Eivatele",
             "url": "classes/App-Controllers-AuthController.html#method_logout"
         },                {
             "fqsen": "\\App\\Controllers\\AuthController\u003A\u003AregisterView\u0028\u0029",
             "name": "registerView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020registraci",
             "url": "classes/App-Controllers-AuthController.html#method_registerView"
         },                {
             "fqsen": "\\App\\Controllers\\AuthController\u003A\u003AloginView\u0028\u0029",
             "name": "loginView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020p\u0159ihl\u00E1\u0161en\u00ED",
             "url": "classes/App-Controllers-AuthController.html#method_loginView"
         },                {
             "fqsen": "\\App\\Controllers\\AuthController\u003A\u003AgetUsername\u0028\u0029",
@@ -188,7 +188,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controllers\\GamesController",
             "name": "GamesController",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020kontrolery",
+            "summary": "Kontroler\u0020pro\u0020pr\u00E1ci\u0020s\u0020hrami",
             "url": "classes/App-Controllers-GamesController.html"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003A__construct\u0028\u0029",
@@ -198,7 +198,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AloadGames\u0028\u0029",
             "name": "loadGames",
-            "summary": "",
+            "summary": "Na\u010Dte\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_loadGames"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AloadComments\u0028\u0029",
@@ -213,82 +213,82 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AuploadGame\u0028\u0029",
             "name": "uploadGame",
-            "summary": "",
+            "summary": "Nahraje\u0020novou\u0020hru",
             "url": "classes/App-Controllers-GamesController.html#method_uploadGame"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AcreateComment\u0028\u0029",
             "name": "createComment",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020koment\u00E1\u0159",
             "url": "classes/App-Controllers-GamesController.html#method_createComment"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AloadGameDetails\u0028\u0029",
             "name": "loadGameDetails",
-            "summary": "",
+            "summary": "Na\u010Dte\u0020detaily\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_loadGameDetails"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AloadParams\u0028\u0029",
             "name": "loadParams",
-            "summary": "",
+            "summary": "Na\u010Dte\u0020URL\u0020parametry",
             "url": "classes/App-Controllers-GamesController.html#method_loadParams"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AdeleteGame\u0028\u0029",
             "name": "deleteGame",
-            "summary": "",
+            "summary": "Sma\u017Ee\u0020hru",
             "url": "classes/App-Controllers-GamesController.html#method_deleteGame"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AdeleteComment\u0028\u0029",
             "name": "deleteComment",
-            "summary": "",
+            "summary": "Sma\u017Ee\u0020komet\u00E1\u0159",
             "url": "classes/App-Controllers-GamesController.html#method_deleteComment"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AupdateGame\u0028\u0029",
             "name": "updateGame",
-            "summary": "",
+            "summary": "Uprav\u00ED\u0020a\u0020ulo\u017E\u00ED\u0020hru",
             "url": "classes/App-Controllers-GamesController.html#method_updateGame"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AupdateDetails\u0028\u0029",
             "name": "updateDetails",
-            "summary": "",
+            "summary": "Uprav\u00ED\u0020a\u0020ulo\u017E\u00ED\u0020detaily\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_updateDetails"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AupdateCoverImage\u0028\u0029",
             "name": "updateCoverImage",
-            "summary": "",
+            "summary": "Uprav\u00ED\u0020a\u0020ulo\u017E\u00ED\u0020tituln\u00ED\u0020obr\u00E1zek\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_updateCoverImage"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AupdateUploads\u0028\u0029",
             "name": "updateUploads",
-            "summary": "",
+            "summary": "P\u0159enahraje\u0020soubory\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_updateUploads"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AtoggleStar\u0028\u0029",
             "name": "toggleStar",
-            "summary": "",
+            "summary": "P\u0159id\u00E1\u0020\/\u0020odebere\u0020hv\u011Bzdi\u010Dku",
             "url": "classes/App-Controllers-GamesController.html#method_toggleStar"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AgamesView\u0028\u0029",
             "name": "gamesView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020p\u0159ehled\u0020her",
             "url": "classes/App-Controllers-GamesController.html#method_gamesView"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AuploadGameView\u0028\u0029",
             "name": "uploadGameView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020nahr\u00E1n\u00ED\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_uploadGameView"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AgameDetailsView\u0028\u0029",
             "name": "gameDetailsView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020detail\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_gameDetailsView"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AeditGameView\u0028\u0029",
             "name": "editGameView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020upravov\u00E1n\u00ED\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_editGameView"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AdeleteGameView\u0028\u0029",
             "name": "deleteGameView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020smaz\u00E1n\u00ED\u0020hry",
             "url": "classes/App-Controllers-GamesController.html#method_deleteGameView"
         },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AgetGameId\u0028\u0029",
@@ -598,17 +598,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controllers\\HomeController",
             "name": "HomeController",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020kontrolery",
+            "summary": "Kontroler\u0020pro\u0020domovskou\u0020str\u00E1nku",
             "url": "classes/App-Controllers-HomeController.html"
         },                {
             "fqsen": "\\App\\Controllers\\HomeController\u003A\u003AhomeView\u0028\u0029",
             "name": "homeView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020domovskou\u0020str\u00E1nku",
             "url": "classes/App-Controllers-HomeController.html#method_homeView"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController",
             "name": "ProfileController",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020kontrolery",
+            "summary": "Kontroler\u0020pro\u0020pr\u00E1ci\u0020s\u0020u\u017Eivatelsk\u00FDm\u0020profilem",
             "url": "classes/App-Controllers-ProfileController.html"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003A__construct\u0028\u0029",
@@ -618,47 +618,47 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AloadUserDetails\u0028\u0029",
             "name": "loadUserDetails",
-            "summary": "",
+            "summary": "Na\u010Dte\u0020detaily\u0020u\u017Eivatele",
             "url": "classes/App-Controllers-ProfileController.html#method_loadUserDetails"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AloadParams\u0028\u0029",
             "name": "loadParams",
-            "summary": "",
+            "summary": "Na\u010Dte\u0020URL\u0020parametry",
             "url": "classes/App-Controllers-ProfileController.html#method_loadParams"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AloadGames\u0028\u0029",
             "name": "loadGames",
-            "summary": "",
+            "summary": "Na\u010Dte\u0020hry\u0020u\u017Eivatele",
             "url": "classes/App-Controllers-ProfileController.html#method_loadGames"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AloadProfile\u0028\u0029",
             "name": "loadProfile",
-            "summary": "",
+            "summary": "Na\u010Dte\u0020profil",
             "url": "classes/App-Controllers-ProfileController.html#method_loadProfile"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AupdateProfile\u0028\u0029",
             "name": "updateProfile",
-            "summary": "",
+            "summary": "Uprav\u00ED\u0020a\u0020ulo\u017E\u00ED\u0020u\u017Eivatelsk\u00FD\u0020profil",
             "url": "classes/App-Controllers-ProfileController.html#method_updateProfile"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AupdateDetails\u0028\u0029",
             "name": "updateDetails",
-            "summary": "",
+            "summary": "Uprav\u00ED\u0020a\u0020ulo\u017E\u00ED\u0020detaily\u0020u\u017Eivatele",
             "url": "classes/App-Controllers-ProfileController.html#method_updateDetails"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AupdatePassword\u0028\u0029",
             "name": "updatePassword",
-            "summary": "",
+            "summary": "Zm\u011Bn\u00ED\u0020heslo",
             "url": "classes/App-Controllers-ProfileController.html#method_updatePassword"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AprofileView\u0028\u0029",
             "name": "profileView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020u\u017Eivatelsk\u00FD\u0020profil",
             "url": "classes/App-Controllers-ProfileController.html#method_profileView"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AeditProfileView\u0028\u0029",
             "name": "editProfileView",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020upravov\u00E1n\u00ED\u0020profilu",
             "url": "classes/App-Controllers-ProfileController.html#method_editProfileView"
         },                {
             "fqsen": "\\App\\Controllers\\ProfileController\u003A\u003AgetUsernameError\u0028\u0029",
@@ -868,7 +868,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Exceptions\\ViewNotFoundException",
             "name": "ViewNotFoundException",
-            "summary": "",
+            "summary": "V\u00FDjimka\u0020pro\u0020view\u0020not\u0020found",
             "url": "classes/App-Exceptions-ViewNotFoundException.html"
         },                {
             "fqsen": "\\App\\Exceptions\\ViewNotFoundException\u003A\u003A\u0024message",
@@ -908,122 +908,122 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Models\\GameCommentModel",
             "name": "GameCommentModel",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020datab\u00E1zov\u00E9\u0020modely",
+            "summary": "Datab\u00E1zov\u00FD\u0020model\u0020pro\u0020koment\u00E1\u0159",
             "url": "classes/App-Models-GameCommentModel.html"
         },                {
             "fqsen": "\\App\\Models\\GameCommentModel\u003A\u003AgetByParams\u0028\u0029",
             "name": "getByParams",
-            "summary": "",
+            "summary": "Vr\u00E1t\u00ED\u0020cekov\u00FD\u0020po\u010Det\u0020a\u0020vybranou\u0020str\u00E1nku\u0020koment\u00E1\u0159\u016F\u0020dan\u00E9\u0020hry",
             "url": "classes/App-Models-GameCommentModel.html#method_getByParams"
         },                {
             "fqsen": "\\App\\Models\\GameCommentModel\u003A\u003Acreate\u0028\u0029",
             "name": "create",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020nov\u00FD\u0020komet\u00E1\u0159\u0020na\u0020dan\u00E9\u0020h\u0159e",
             "url": "classes/App-Models-GameCommentModel.html#method_create"
         },                {
             "fqsen": "\\App\\Models\\GameCommentModel\u003A\u003AgetById\u0028\u0029",
             "name": "getById",
-            "summary": "",
+            "summary": "Vr\u00E1t\u00ED\u0020komet\u00E1\u0159\u0020podle\u0020ID",
             "url": "classes/App-Models-GameCommentModel.html#method_getById"
         },                {
             "fqsen": "\\App\\Models\\GameCommentModel\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "",
+            "summary": "Sma\u017Ee\u0020komet\u00E1\u0159\u0020podle\u0020ID",
             "url": "classes/App-Models-GameCommentModel.html#method_delete"
         },                {
             "fqsen": "\\App\\Models\\GameGenreModel",
             "name": "GameGenreModel",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020datab\u00E1zov\u00E9\u0020modely",
+            "summary": "Datab\u00E1zov\u00FD\u0020model\u0020pro\u0020hern\u00ED\u0020\u017E\u00E1nr",
             "url": "classes/App-Models-GameGenreModel.html"
         },                {
             "fqsen": "\\App\\Models\\GameGenreModel\u003A\u003AgetAll\u0028\u0029",
             "name": "getAll",
-            "summary": "",
+            "summary": "Vr\u00E1t\u00ED\u0020v\u0161echny\u0020\u017E\u00E1nry",
             "url": "classes/App-Models-GameGenreModel.html#method_getAll"
         },                {
             "fqsen": "\\App\\Models\\GameModel",
             "name": "GameModel",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020datab\u00E1zov\u00E9\u0020modely",
+            "summary": "Datab\u00E1zov\u00FD\u0020model\u0020pro\u0020hru",
             "url": "classes/App-Models-GameModel.html"
         },                {
             "fqsen": "\\App\\Models\\GameModel\u003A\u003AgetByParams\u0028\u0029",
             "name": "getByParams",
-            "summary": "",
+            "summary": "Vr\u00E1t\u00ED\u0020cekov\u00FD\u0020po\u010Det\u0020a\u0020vybranou\u0020str\u00E1nku\u0020her",
             "url": "classes/App-Models-GameModel.html#method_getByParams"
         },                {
             "fqsen": "\\App\\Models\\GameModel\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "",
+            "summary": "Uprav\u00ED\u0020a\u0020ulo\u017E\u00ED\u0020hru",
             "url": "classes/App-Models-GameModel.html#method_update"
         },                {
             "fqsen": "\\App\\Models\\GameModel\u003A\u003Acreate\u0028\u0029",
             "name": "create",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020novou\u0020hru",
             "url": "classes/App-Models-GameModel.html#method_create"
         },                {
             "fqsen": "\\App\\Models\\GameModel\u003A\u003AgetById\u0028\u0029",
             "name": "getById",
-            "summary": "",
+            "summary": "Vr\u00E1t\u00ED\u0020hru\u0020podle\u0020ID",
             "url": "classes/App-Models-GameModel.html#method_getById"
         },                {
             "fqsen": "\\App\\Models\\GameModel\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "",
+            "summary": "Sma\u017Ee\u0020hru",
             "url": "classes/App-Models-GameModel.html#method_delete"
         },                {
             "fqsen": "\\App\\Models\\GameStarModel",
             "name": "GameStarModel",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020datab\u00E1zov\u00E9\u0020modely",
+            "summary": "Datab\u00E1zov\u00FD\u0020model\u0020pro\u0020hv\u011Bzdi\u010Dku",
             "url": "classes/App-Models-GameStarModel.html"
         },                {
             "fqsen": "\\App\\Models\\GameStarModel\u003A\u003Acreate\u0028\u0029",
             "name": "create",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020hv\u011Bzdi\u010Dku\u0020od\u0020dan\u00E9ho\u0020u\u017Eivatele\u0020na\u0020dan\u00E9\u0020h\u0159e",
             "url": "classes/App-Models-GameStarModel.html#method_create"
         },                {
             "fqsen": "\\App\\Models\\GameStarModel\u003A\u003Aexists\u0028\u0029",
             "name": "exists",
-            "summary": "",
+            "summary": "Zjist\u00ED\u0020existuje\u002Dli\u0020hv\u011Bzdi\u010Dka\u0020od\u0020dan\u00E9ho\u0020u\u017Eivatele\u0020na\u0020dan\u00E9\u0020h\u0159e",
             "url": "classes/App-Models-GameStarModel.html#method_exists"
         },                {
             "fqsen": "\\App\\Models\\GameStarModel\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "",
+            "summary": "Sma\u017Ee\u0020hvezdi\u010Dku\u0020od\u0020dan\u00E9ho\u0020u\u017Eivatele\u0020na\u0020dan\u00E9\u0020h\u0159e",
             "url": "classes/App-Models-GameStarModel.html#method_delete"
         },                {
             "fqsen": "\\App\\Models\\UserModel",
             "name": "UserModel",
-            "summary": "Rodi\u010Dovsk\u00E1\u0020t\u0159\u00EDda\u0020pro\u0020datab\u00E1zov\u00E9\u0020modely",
+            "summary": "Datab\u00E1zov\u00FD\u0020model\u0020pro\u0020u\u017Eivatelsk\u00FD\u0020profil",
             "url": "classes/App-Models-UserModel.html"
         },                {
             "fqsen": "\\App\\Models\\UserModel\u003A\u003AhashPassword\u0028\u0029",
             "name": "hashPassword",
-            "summary": "",
+            "summary": "Zahe\u0161uje\u0020heslo",
             "url": "classes/App-Models-UserModel.html#method_hashPassword"
         },                {
             "fqsen": "\\App\\Models\\UserModel\u003A\u003Acreate\u0028\u0029",
             "name": "create",
-            "summary": "",
+            "summary": "Vytvo\u0159\u00ED\u0020u\u017Eivatele",
             "url": "classes/App-Models-UserModel.html#method_create"
         },                {
             "fqsen": "\\App\\Models\\UserModel\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "",
+            "summary": "Uprav\u00ED\u0020a\u0020ulo\u017E\u00ED\u0020u\u017Eivatele",
             "url": "classes/App-Models-UserModel.html#method_update"
         },                {
             "fqsen": "\\App\\Models\\UserModel\u003A\u003AupdatePassword\u0028\u0029",
             "name": "updatePassword",
-            "summary": "",
+            "summary": "Uprav\u00ED\u0020a\u0020ulo\u017E\u00ED\u0020heslo",
             "url": "classes/App-Models-UserModel.html#method_updatePassword"
         },                {
             "fqsen": "\\App\\Models\\UserModel\u003A\u003AgetById\u0028\u0029",
             "name": "getById",
-            "summary": "",
+            "summary": "Vr\u00E1t\u00ED\u0020u\u017Eivatele\u0020podle\u0020ID",
             "url": "classes/App-Models-UserModel.html#method_getById"
         },                {
             "fqsen": "\\App\\Models\\UserModel\u003A\u003AgetByUsername\u0028\u0029",
             "name": "getByUsername",
-            "summary": "",
+            "summary": "Vr\u00E1t\u00ED\u0020u\u017Eivatele\u0020podle\u0020jm\u00E9na",
             "url": "classes/App-Models-UserModel.html#method_getByUsername"
         },                {
             "fqsen": "\\App\\Utils",
@@ -1073,12 +1073,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\UPLOADS_PATH",
             "name": "UPLOADS_PATH",
-            "summary": "",
+            "summary": "Ko\u0159enov\u00FD\u0020adres\u00E1\u0159\u0020pro\u0020nahran\u00E9\u0020soubory",
             "url": "namespaces/default.html#constant_UPLOADS_PATH"
         },                {
             "fqsen": "\\VIEW_PATH",
             "name": "VIEW_PATH",
-            "summary": "",
+            "summary": "Ko\u0159enov\u00FD\u0020adres\u00E1\u0159\u0020pro\u0020view",
             "url": "namespaces/default.html#constant_VIEW_PATH"
         },                {
             "fqsen": "\\",
