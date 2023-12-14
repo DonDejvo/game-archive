@@ -1036,6 +1036,11 @@ Search.appendIndex(
             "summary": "Rekurzivn\u011B\u0020sma\u017Ee\u0020obsah\u0020slo\u017Eky",
             "url": "classes/App-Utils.html#method_rrmdir"
         },                {
+            "fqsen": "\\App\\Utils\u003A\u003Arcpdir\u0028\u0029",
+            "name": "rcpdir",
+            "summary": "Rekurzivn\u011B\u0020zkop\u00EDruje\u0020obsah\u0020slo\u017Eky",
+            "url": "classes/App-Utils.html#method_rcpdir"
+        },                {
             "fqsen": "\\App\\View",
             "name": "View",
             "summary": "T\u0159\u00EDda\u0020pro\u0020vytvo\u0159en\u00ED\u0020obsahu\u0020str\u00E1nky",

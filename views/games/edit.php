@@ -127,7 +127,7 @@
                         <input id="uploads" name="uploads" type="file" required />
                     </div>
                     <ul>
-                        <li>Max file size 5MB</li>
+                        <li>Max file size 2MB</li>
                         <li>Only HTML</li>
                     </ul>
                 </div>

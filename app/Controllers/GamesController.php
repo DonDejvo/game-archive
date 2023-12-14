@@ -35,7 +35,7 @@ class GamesController extends Controller {
 
     const COVER_IMAGE_FILE_TYPES = ["jpg", "jpeg", "gif", "png"];
 
-    const MAX_UPLOADS_SIZE = 5000000;
+    const MAX_UPLOADS_SIZE = 2000000;
 
     const FILTER_OPTIONS = [
         'Most recent' => [1, false],
@@ -195,7 +195,7 @@ class GamesController extends Controller {
                     $this->uploadsError = 'Only HTML or ZIP files allowed';
                     $success = false;
                 } elseif($fileUploads['size'] > self::MAX_UPLOADS_SIZE) {
-                    $this->coverImageError = 'File size exceeds limit of 5MB';
+                    $this->coverImageError = 'File size exceeds limit of 2MB';
                     $success = false;
                 } elseif($uploadsFileType == "zip") {
 
@@ -595,7 +595,7 @@ class GamesController extends Controller {
                 $this->uploadsError = 'Only HTML and ZIP files allowed';
                 $success = false;
             } elseif($fileUploads['size'] > self::MAX_UPLOADS_SIZE) {
-                $this->uploadsError = 'File size exceeds limit of 5MB';
+                $this->uploadsError = 'File size exceeds limit of 2MB';
                 $success = false;
             } elseif($uploadsFileType == "zip") {
 
