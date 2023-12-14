@@ -29,7 +29,7 @@ class ProfileController extends Controller {
 
     private string $errorMessage;
 
-    private int $countPerPage = 10;
+    private int $countPerPage = 6;
 
     private int $page;
 
