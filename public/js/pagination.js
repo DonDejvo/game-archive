@@ -9,10 +9,10 @@
 
     if (filterWidget) {
 
-        const searchInput = filterWidget.getElementById("search");
-        const genreInput = filterWidget.getElementById("genre");
-        const filterInput = filterWidget.getElementById("filter");
-        const searchBtn = filterWidget.getElementById("search-btn");
+        const searchInput = filterWidget.querySelector("#search");
+        const genreInput = filterWidget.querySelector("#genre");
+        const filterInput = filterWidget.querySelector("#filter");
+        const searchBtn = filterWidget.querySelector("#search-btn");
 
         searchBtn.addEventListener('click', () => updateQueryParam('search', searchInput.value));
         genreInput.addEventListener('change', () => updateQueryParam('genre', genreInput.value));
