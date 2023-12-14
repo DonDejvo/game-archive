@@ -22,7 +22,7 @@
             <input id="cover-image" name="cover-image" type="file" required />
         </div>
         <ul>
-            <li>Max image size 50KB</li>
+            <li>Max image size 150KB</li>
             <li>Only JPG, JPEG or GIF</li>
         </ul>
     </div>
@@ -65,7 +65,7 @@
         </div>
         <ul>
             <li>Max file size 5MB</li>
-            <li>Only HTML</li>
+            <li>Only ZIP or HTML</li>
         </ul>
     </div>
     <div>

@@ -89,7 +89,6 @@
             </div>
             <div>
                 <button name="change-password" type="submit" class="btn">Change password</button>
-                <a href="edit-profile.php?activeTabName=password" class="btn">Reset</a>
             </div>
             </form>
         </div>

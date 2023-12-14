@@ -143,6 +143,7 @@ class GamesController extends Controller {
         $this->errorMessage = "";
 
         $success = true;
+        $tmpPath = UPLOADS_PATH . "/tmp/games/" . uniqid();
 
         $user = $this->getUser();
         if($user == null) {
@@ -167,7 +168,7 @@ class GamesController extends Controller {
                 $success = false;
             } else {
                 $coverImageFileType =  strtolower(pathinfo($fileCoverImage['name'], PATHINFO_EXTENSION));
-                $coverImageUrl = (string)time() . (string)rand(10, 100) . '.' .$coverImageFileType;
+                $coverImageUrl = uniqid() . '.' .$coverImageFileType;
 
                 $coverImageCheck = getimagesize($_FILES["cover-image"]["tmp_name"]);
                 if($coverImageCheck == false) {
@@ -190,12 +191,38 @@ class GamesController extends Controller {
             } else {
                 $uploadsFileType =  strtolower(pathinfo($fileUploads['name'], PATHINFO_EXTENSION));
 
-                if($uploadsFileType != "html") {
-                    $this->uploadsError = 'Only HTML files allowed';
+                if($uploadsFileType != "html" && $uploadsFileType != "zip") {
+                    $this->uploadsError = 'Only HTML or ZIP files allowed';
                     $success = false;
                 } elseif($fileUploads['size'] > self::MAX_UPLOADS_SIZE) {
                     $this->coverImageError = 'File size exceeds limit of 5MB';
                     $success = false;
+                } elseif($uploadsFileType == "zip") {
+
+                    mkdir($tmpPath, 0777, true);
+
+                    $zip = new \ZipArchive;
+                    if ($zip->open($fileUploads['tmp_name']) === true) {
+                        $zip->extractTo($tmpPath);
+                        $zip->close();
+                    } else {
+                        $this->uploadsError = 'Unable to extract files';
+                        $success = false;
+                    }
+
+                    $parentDir = ".";
+                    $files = array_diff(scandir($tmpPath), array('..', '.'));
+                    foreach($files as $file) {
+                        $parentDir = $file;
+                        break;
+                    }
+
+                    if($success) {
+                        if(!file_exists($tmpPath . "/" . $parentDir . "/index.html")) {
+                            $this->uploadsError = "File 'index.html' not found";
+                            $success = false;
+                        }
+                    }
                 }
             }
 
@@ -212,9 +239,7 @@ class GamesController extends Controller {
 
                 Utils::rrmdir($path);
     
-                if(!mkdir($path, 0777, true)) {
-                    die('Failed to create directories');
-                }
+                mkdir($path, 0777, true);
     
                 mkdir($path . "/assets");
     
@@ -223,13 +248,20 @@ class GamesController extends Controller {
                 move_uploaded_file($fileCoverImage['tmp_name'], $coverImageDest);
     
                 mkdir($path . "/dist");
+
+                if($uploadsFileType == "zip") {
+
+                    Utils::rcpdir($tmpPath . "/" . $parentDir, $path . "/dist");
+                } else {
+                    $uploadsFileDist = $path . "/dist/index.html";
     
-                $uploadsFileDist = $path . "/dist/index.html";
-    
-                move_uploaded_file($fileUploads['tmp_name'], $uploadsFileDist);
+                    move_uploaded_file($fileUploads['tmp_name'], $uploadsFileDist);
+                }
 
             }
         }
+
+        Utils::rrmdir($tmpPath);
 
         if($success) {
             header("Location: game-details.php?id={$gameId}", true);
@@ -500,7 +532,7 @@ class GamesController extends Controller {
             $success = false;
         } else {
             $coverImageFileType =  strtolower(pathinfo($fileCoverImage['name'], PATHINFO_EXTENSION));
-            $coverImageUrl = (string)time() . (string)rand(10, 100) . '.' .$coverImageFileType;
+            $coverImageUrl = uniqid() . '.' .$coverImageFileType;
 
             $coverImageCheck = getimagesize($_FILES["cover-image"]["tmp_name"]);
             if($coverImageCheck == false) {
@@ -521,9 +553,7 @@ class GamesController extends Controller {
             $path = UPLOADS_PATH . "/games/{$gameId}";
 
             if(!is_dir($path . "/assets")) {
-                if(!mkdir($path . "/assets", 0777, true)) {
-                    die('Failed to create directories');
-                }
+                mkdir($path . "/assets", 0777, true);
             }
 
             $oldCoverImageDest = $path . "/assets/" . $this->coverImageUrl;
@@ -553,6 +583,7 @@ class GamesController extends Controller {
     private function updateUploads(int $gameId) {
         $fileUploads = $_FILES['uploads'];
         $success = true;
+        $tmpPath = UPLOADS_PATH . "/tmp/games/" . uniqid();
 
         if ($fileUploads['error'] == 4 || ($fileUploads['size'] == 0 && $fileUploads['error'] == 0)) {
             $this->uploadsError = 'Field is required';
@@ -560,37 +591,65 @@ class GamesController extends Controller {
         } else {
             $uploadsFileType =  strtolower(pathinfo($fileUploads['name'], PATHINFO_EXTENSION));
 
-            if($uploadsFileType != "html") {
-                $this->uploadsError = 'Only HTML files allowed';
+            if($uploadsFileType != "html" && $uploadsFileType != "zip") {
+                $this->uploadsError = 'Only HTML and ZIP files allowed';
                 $success = false;
-            }
-
-            if($fileUploads['size'] > self::MAX_UPLOADS_SIZE) {
+            } elseif($fileUploads['size'] > self::MAX_UPLOADS_SIZE) {
                 $this->uploadsError = 'File size exceeds limit of 5MB';
                 $success = false;
+            } elseif($uploadsFileType == "zip") {
+
+                mkdir($tmpPath, 0777, true);
+
+                $zip = new \ZipArchive;
+                if ($zip->open($fileUploads['tmp_name']) === true) {
+                    $zip->extractTo($tmpPath);
+                    $zip->close();
+                } else {
+                    $this->uploadsError = 'Unable to extract files';
+                    $success = false;
+                }
+
+                $parentDir = ".";
+                $files = array_diff(scandir($tmpPath), array('..', '.'));
+                foreach($files as $file) {
+                    $parentDir = $file;
+                    break;
+                }
+
+                if($success) {
+                    if(!file_exists($tmpPath . "/" . $parentDir . "/index.html")) {
+                        $this->uploadsError = "File 'index.html' not found";
+                        $success = false;
+                    }
+                }
             }
         }
 
         if($success) {
             $path = UPLOADS_PATH . "/games/{$gameId}";
 
+            Utils::rrmdir($path . "/dist");
+
             if(!is_dir($path . "/dist")) {
-                if(!mkdir($path . "/dist", 0777, true)) {
-                    die('Failed to create directories');
-                }
+                mkdir($path . "/dist", 0777, true);
             }
 
-            $uploadsFileDist = $path . "/dist/index.html";
+            if($uploadsFileType == "zip") {
 
-            if(file_exists($uploadsFileDist)) {
-                unlink($uploadsFileDist);
+                Utils::rcpdir($tmpPath . "/" . $parentDir, $path . "/dist");
+            } else {
+                $uploadsFileDist = $path . "/dist/index.html";
+
+                move_uploaded_file($fileUploads['tmp_name'], $uploadsFileDist);
             }
 
-            move_uploaded_file($fileUploads['tmp_name'], $uploadsFileDist);
             $this->successMessage = 'Uploads updated successfully!';
         } else {
             $this->errorMessage = 'Uploads failed to update!';
         }
+
+        Utils::rrmdir($tmpPath);
 
         return $success;
     }

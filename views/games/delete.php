@@ -5,3 +5,6 @@
 <?php elseif($controller->getErrorMessage() != ""): ?>
     <p class="text-error"><?= htmlspecialchars($controller->getErrorMessage(), ENT_QUOTES) ?></p>
 <?php endif; ?>
+<div>
+    <a href="games.php">Back</a>
+</div>

@@ -95,7 +95,7 @@
                         <input id="cover-image" name="cover-image" type="file" required />
                     </div>
                     <ul>
-                        <li>Max image size 50KB</li>
+                        <li>Max image size 150KB</li>
                         <li>Only JPG, JPEG or GIF</li>
                     </ul>
                 </div>
@@ -122,7 +122,7 @@
             <?php endif; ?>
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <div class="form-control" data-error="<?= htmlspecialchars($controller->getUploadsError(), ENT_QUOTES) ?>">
+                    <div class="form-control required" data-error="<?= htmlspecialchars($controller->getUploadsError(), ENT_QUOTES) ?>">
                         <label for="uploads">Uploads</label>
                         <input id="uploads" name="uploads" type="file" required />
                     </div>

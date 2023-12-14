@@ -10,6 +10,7 @@
 </div>
 <div>
 <?php if($controller->getUserId() == $controller->getUser()?->getId()): ?>
+<a class="btn" href="upload-game.php">Upload game</a>
 <a class="btn" href="edit-profile.php">Edit profile</a>
 <?php endif; ?>
 </div>
