@@ -4,7 +4,7 @@
 
     for (let i = 0; i < paginationLinks.length; ++i) {
         const elem = paginationLinks[i];
-        elem.addEventListener('click', () => updateQueryParam('page', elem.dataset.page));
+        elem.addEventListener('click', () => updateQueryParam({ page: elem.dataset.page }));
     }
 
     if (filterWidget) {
@@ -14,14 +14,16 @@
         const filterInput = filterWidget.querySelector("#filter");
         const searchBtn = filterWidget.querySelector("#search-btn");
 
-        searchBtn.addEventListener('click', () => updateQueryParam('search', searchInput.value));
-        genreInput.addEventListener('change', () => updateQueryParam('genre', genreInput.value));
-        filterInput.addEventListener('change', () => updateQueryParam('filter', filterInput.value));
+        searchBtn.addEventListener('click', () => updateQueryParam({ search: searchInput.value, page: 1 }));
+        genreInput.addEventListener('change', () => updateQueryParam({ genre: genreInput.value, page: 1 }));
+        filterInput.addEventListener('change', () => updateQueryParam({ filter: filterInput.value, page: 1 }));
     }
 
-    function updateQueryParam(name, value) {
+    function updateQueryParam(params) {
         const searchParams = new URLSearchParams(location.search);
-        searchParams.set(name, value);
+        for (let name in params) {
+            searchParams.set(name, params[name]);
+        }
         location.search = searchParams.toString();
     }
 })()
