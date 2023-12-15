@@ -27,4 +27,4 @@
         </form>
         <p>Already have an account? Login <a href="login.php">here</a></p>
     </div>
-<div>
+</div>

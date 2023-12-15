@@ -21,4 +21,4 @@
         </form>
         <p>Are you new? Register <a href="register.php">here</a></p>
     </div>
-<div>
+</div>

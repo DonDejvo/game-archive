@@ -54,15 +54,17 @@ $lastPage = (int)(max($controller->getCommentCount() - 1, 0) / $controller->getC
             <li>
                 <span class="game-details-label">Author</span>
                 <a href="<?= 'profile.php?id=' . $controller->getUserId() ?>">
-    <?= htmlspecialchars($controller->getUserName(), ENT_QUOTES) ?>
-</a>
+                    <?= htmlspecialchars($controller->getUserName(), ENT_QUOTES) ?>
+                </a>
             </li>
         </ul>
         <h2>Download</h2>
         <div>
             <a href="<?= 'download-game.php?id=' . $controller->getGameId() ?>">Download source</a>
         </div>
-        <h2>Comments</h2>
+    </div>
+</div>
+<h2>Comments</h2>
         <div>
             <?php if($controller->getUser() != null): ?>
             <form method="POST" class="form" action="<?= 'create-comment.php?gameId=' . $controller->getGameId() ?>">
@@ -77,27 +79,27 @@ $lastPage = (int)(max($controller->getCommentCount() - 1, 0) / $controller->getC
                 </div>
             </form>
             <?php endif; ?>
-            <ul class="comment-list">
             <?php if($controller->getCommentCount() > 0): ?>
+            <ul class="comment-list">
                 <?php foreach($comments as $comment): ?>
-                <li class="comment">
-                    <div class="comment__header">
-                        <a class="comment__author" href="<?= 'profile.php?id=' . $comment['user_id'] ?>">
-                            <?= htmlspecialchars($comment['username'], ENT_QUOTES) ?>
-                        </a>
-                        <span class="comment__date">
-                            <?= date("m/d/Y", strtotime($comment['created_at'])) ?>
-                        </span>
-                    </div>
-                    <div class="comment__body">
-                        <div class="comment__message"><?= htmlspecialchars($comment['message'], ENT_QUOTES) ?></div>
-                    </div>
-                    <div>
-                        <?php if($comment['user_id'] == $controller->getUser()?->getId() || $controller->getUserId() == $controller->getUser()?->getId()): ?>
-                        <a class="delete-comment-btn" data-game-id="<?= $controller->getGameId() ?>" data-comment-id="<?= $comment['id'] ?>" href="#">Delete</a>
-                        <?php endif; ?>
-                    </div>
-                </li>
+                    <li class="comment">
+                        <div class="comment__header">
+                            <a class="comment__author" href="<?= 'profile.php?id=' . $comment['user_id'] ?>">
+                                <?= htmlspecialchars($comment['username'], ENT_QUOTES) ?>
+                            </a>
+                            <span class="comment__date">
+                                <?= date("m/d/Y", strtotime($comment['created_at'])) ?>
+                            </span>
+                        </div>
+                        <div class="comment__body">
+                            <div class="comment__message"><?= htmlspecialchars($comment['message'], ENT_QUOTES) ?></div>
+                        </div>
+                        <div>
+                            <?php if($comment['user_id'] == $controller->getUser()?->getId() || $controller->getUserId() == $controller->getUser()?->getId()): ?>
+                                <a class="delete-comment-btn" data-game-id="<?= $controller->getGameId() ?>" data-comment-id="<?= $comment['id'] ?>" href="#">Delete</a>
+                            <?php endif; ?>
+                        </div>
+                    </li>
                 <?php endforeach; ?>
             </ul>
             <div class="pagination-wrapper">
@@ -107,8 +109,6 @@ $lastPage = (int)(max($controller->getCommentCount() - 1, 0) / $controller->getC
             <p>No comments yet</p>
             <?php endif; ?>
         </div>
-    </div>
-</div>
 <?php else: ?>
 <h2>404 Game not found</h2>
 <?php endif; ?>

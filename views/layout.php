@@ -18,9 +18,11 @@
         <div class="container">
             <?php include(VIEW_PATH . '/partials/sidebar.php'); ?>
             <main>
-                <section>
-                    <article><?php include($viewPath); ?></article>
-                </section>
+                <div class="content">
+                    <div class="content__inner">
+                        <?php include($viewPath); ?>
+                    </div>
+                </div>
             </main>
         </div>
     </div>

@@ -140,7 +140,7 @@
         <div data-tab-name="delete">
             <h2>Delete game</h2>
 
-            <button class="btn delete-game-btn" data-game-id="<?= $controller->getGameId() ?>" href="#">Delete</button>
+            <button class="btn delete-game-btn" data-game-id="<?= $controller->getGameId() ?>">Delete</button>
         </div>
     </div>
 </div>
