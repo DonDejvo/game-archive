@@ -83,4 +83,29 @@ class Utils {
         closedir($directory);
     }
 
+    /**
+     * Vytvoří ZIP ze složky
+     * 
+     * @param \ZipArchive $zipArchive   ZipArchive instance
+     * @param string $folder            cesta ke složka
+     * @param string $childFolder
+     */
+    public static function createZip(\ZipArchive $zipArchive, string $folder, string $childFolder = '') {
+        $f = opendir($folder);
+
+        while (($file = readdir($f)) !== false) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            if (is_file($folder . $file)) {
+                $zipArchive->addFile($folder . $file, " " . $childFolder . basename($file));
+            } elseif (is_dir($folder . $file)) {
+                $subfolder = $folder . $file . '/';
+                self::createZip($zipArchive, $subfolder, $childFolder . $file . '/');
+            }
+        }
+            
+        closedir($f);
+    }
 }

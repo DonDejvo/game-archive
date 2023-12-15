@@ -266,6 +266,11 @@ Search.appendIndex(
             "summary": "P\u0159id\u00E1\u0020\/\u0020odebere\u0020hv\u011Bzdi\u010Dku",
             "url": "classes/App-Controllers-GamesController.html#method_toggleStar"
         },                {
+            "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AdownloadSource\u0028\u0029",
+            "name": "downloadSource",
+            "summary": "St\u00E1hne\u0020ZIP\u0020se\u0020zdrojov\u00FDmi\u0020soubory\u0020hry",
+            "url": "classes/App-Controllers-GamesController.html#method_downloadSource"
+        },                {
             "fqsen": "\\App\\Controllers\\GamesController\u003A\u003AgamesView\u0028\u0029",
             "name": "gamesView",
             "summary": "Vytvo\u0159\u00ED\u0020a\u0020vr\u00E1t\u00ED\u0020view\u0020pro\u0020p\u0159ehled\u0020her",
@@ -1040,6 +1045,11 @@ Search.appendIndex(
             "name": "rcpdir",
             "summary": "Rekurzivn\u011B\u0020zkop\u00EDruje\u0020obsah\u0020slo\u017Eky",
             "url": "classes/App-Utils.html#method_rcpdir"
+        },                {
+            "fqsen": "\\App\\Utils\u003A\u003AcreateZip\u0028\u0029",
+            "name": "createZip",
+            "summary": "Vytvo\u0159\u00ED\u0020ZIP\u0020ze\u0020slo\u017Eky",
+            "url": "classes/App-Utils.html#method_createZip"
         },                {
             "fqsen": "\\App\\View",
             "name": "View",

@@ -143,7 +143,7 @@ class GamesController extends Controller {
         $this->errorMessage = "";
 
         $success = true;
-        $tmpPath = UPLOADS_PATH . "/tmp/games/" . uniqid();
+        $tmpPath = UPLOADS_PATH . "/tmp/" . uniqid();
 
         $user = $this->getUser();
         if($user == null) {
@@ -583,7 +583,7 @@ class GamesController extends Controller {
     private function updateUploads(int $gameId) {
         $fileUploads = $_FILES['uploads'];
         $success = true;
-        $tmpPath = UPLOADS_PATH . "/tmp/games/" . uniqid();
+        $tmpPath = UPLOADS_PATH . "/tmp/" . uniqid();
 
         if ($fileUploads['error'] == 4 || ($fileUploads['size'] == 0 && $fileUploads['error'] == 0)) {
             $this->uploadsError = 'Field is required';
@@ -688,6 +688,45 @@ class GamesController extends Controller {
         }
 
         echo json_encode($result);
+    }
+
+    /**
+     * Stáhne ZIP se zdrojovými soubory hry
+     */
+    public function downloadSource() {
+        $path = UPLOADS_PATH . "/games/{$this->gameId}";
+        $tmpPath = UPLOADS_PATH . "/tmp/" . uniqid();
+        $zipFile = $tmpPath . "/" . $this->title . ".zip";
+
+        if(!file_exists($path)) {
+            echo 'Game not found.';
+            exit();
+        }
+
+        $zip = new \ZipArchive();
+
+        mkdir($tmpPath, 0777, true);
+
+        if ($zip->open($zipFile, \ZipArchive::CREATE) == true) {
+            Utils::createZip($zip, $path . "/dist/");
+            $zip->close();
+
+            header('Pragma: public');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Cache-Control: private', false);
+            header('Content-Type: application/zip');
+            header('Content-Disposition: attachment; filename="' . basename($zipFile) . '";');
+            header('Content-Transfer-Encoding: binary');
+            header('Content-Length: ' . filesize($zipFile));
+            readfile($zipFile);
+
+        } else {
+            echo 'Failed to download game.';
+        }
+
+        Utils::rrmdir($tmpPath);
+        exit();
     }
 
     /**

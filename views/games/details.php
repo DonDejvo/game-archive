@@ -60,8 +60,7 @@ $lastPage = (int)(max($controller->getCommentCount() - 1, 0) / $controller->getC
         </ul>
         <h2>Download</h2>
         <div>
-            <a href="<?= 'uploads/games/' . $controller->getGameId() . '/dist/index.html' ?>"
-            download="<?= htmlspecialchars($controller->getTitle(), ENT_QUOTES) . '.html' ?>">Download source</a>
+            <a href="<?= 'download-game.php?id=' . $controller->getGameId() ?>">Download source</a>
         </div>
         <h2>Comments</h2>
         <div>
