@@ -96,7 +96,7 @@
                     </div>
                     <ul>
                         <li>Max image size 150KB</li>
-                        <li>Only JPG, JPEG or GIF</li>
+                        <li>Only PNG, JPG, JPEG or GIF</li>
                     </ul>
                 </div>
                 <div>
@@ -128,7 +128,7 @@
                     </div>
                     <ul>
                         <li>Max file size 2MB</li>
-                        <li>Only HTML</li>
+                        <li>Only HTML or ZIP</li>
                     </ul>
                 </div>
                 <div>

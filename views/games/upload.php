@@ -23,7 +23,7 @@
         </div>
         <ul>
             <li>Max image size 150KB</li>
-            <li>Only JPG, JPEG or GIF</li>
+            <li>Only PNG, JPG, JPEG or GIF</li>
         </ul>
     </div>
     <div class="form-group">
