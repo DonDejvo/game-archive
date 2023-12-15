@@ -99,7 +99,7 @@ class Utils {
             }
 
             if (is_file($folder . $file)) {
-                $zipArchive->addFile($folder . $file, " " . $childFolder . basename($file));
+                $zipArchive->addFile($folder . $file, $childFolder . basename($file));
             } elseif (is_dir($folder . $file)) {
                 $subfolder = $folder . $file . '/';
                 self::createZip($zipArchive, $subfolder, $childFolder . $file . '/');

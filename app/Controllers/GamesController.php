@@ -213,8 +213,11 @@ class GamesController extends Controller {
                     $parentDir = ".";
                     $files = array_diff(scandir($tmpPath), array('..', '.'));
                     foreach($files as $file) {
+                        if($file == "index.html") {
+                            $parentDir = ".";
+                            break;
+                        }
                         $parentDir = $file;
-                        break;
                     }
 
                     if($success) {
@@ -613,8 +616,11 @@ class GamesController extends Controller {
                 $parentDir = ".";
                 $files = array_diff(scandir($tmpPath), array('..', '.'));
                 foreach($files as $file) {
+                    if($file == "index.html") {
+                        $parentDir = ".";
+                        break;
+                    }
                     $parentDir = $file;
-                    break;
                 }
 
                 if($success) {
