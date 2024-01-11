@@ -83,9 +83,10 @@ class GamesController extends Controller {
     public function __construct() {
 
         $this->search = $_GET['search'] ?? "";
-        $this->page = $_GET['page'] ?? 1;
-        $this->filter = $_GET['filter'] ?? 1;
-        $this->genre = $_GET['genre'] ?? 0;
+        $this->page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        if($this->page < 1) $this->page = 1;
+        $this->filter = isset($_GET['filter']) ? (int) $_GET['filter'] : 1;
+        $this->genre = isset($_GET['genre']) ? (int) $_GET['genre'] : 0;
 
         $this->gameId = null;
         $this->userId = null;
@@ -356,7 +357,7 @@ class GamesController extends Controller {
             $this->description = urldecode($_GET['description']);
         }
         if(isset($_GET['genreId'])) {
-            $this->genreId = $_GET['genreId'];
+            $this->genreId = (int)$_GET['genreId'];
         }
         if(isset($_GET['titleError'])) {
             $this->titleError = urldecode($_GET['titleError']);

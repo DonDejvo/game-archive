@@ -23,6 +23,7 @@
                         <?php include($viewPath); ?>
                     </div>
                 </div>
+                <?php include(VIEW_PATH . '/partials/footer.php'); ?>
             </main>
         </div>
     </div>

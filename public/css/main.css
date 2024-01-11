@@ -849,3 +849,10 @@ header {
 .centered {
     text-align: center;
 }
+
+/* footer */
+
+.footer {
+    text-align: center;
+    margin-top: 2rem;
+}
